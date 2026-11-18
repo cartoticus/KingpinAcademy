@@ -7,6 +7,7 @@ A single-page app for learning to bowl, from your first frame to league night. O
 | Tab | What it does |
 |---|---|
 | **The Path** | A self-paced roadmap in four levels. Each step says what to learn, links to the tool that helps, and tells you when you are ready to move on. |
+| **Basics** | A cheat sheet: pin numbers and names, strikes and spares, score sheet symbols, lane etiquette, safety, and the parts of the lane. Prints as a one-page handout. |
 | **Study Hall** | Eight short lessons, each with a quiz you can retry: fundamentals, the four-step approach, release, targeting, spares, oil patterns, equipment, and the mental game. |
 | **Score School** | Enter a game ball by ball and see how strikes, spares and the 10th frame are scored. |
 | **Practice** | A 60-minute solo practice plan, a self-check list, a pre-shot routine builder and a drill library. |

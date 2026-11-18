@@ -157,6 +157,28 @@ button.action:disabled{opacity:.5;cursor:not-allowed}
 .progress-shell{background:var(--white);border:2px solid var(--navy);border-radius:999px;height:22px;overflow:hidden;margin-top:10px}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0%;transition:width .3s ease}
 
+/* ---------- Basics (cheat sheet) ---------- */
+.rack-svg{display:block;width:100%;max-width:340px;margin:6px auto 0}
+.rack-svg .pinc{fill:var(--white);stroke:var(--navy);stroke-width:3}
+.rack-svg .pinc.head{stroke:var(--red);stroke-width:4}
+.rack-svg .pinc.king{fill:#F3E2B4;stroke:var(--gold)}
+.rack-svg text{font-family:'Alfa Slab One',serif;font-size:18px;fill:var(--navy);text-anchor:middle;dominant-baseline:central}
+.rack-svg .cap{font-family:'Public Sans',sans-serif;font-weight:700;font-size:12px;fill:#5b4d3c}
+.sym{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:30px;padding:0 6px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;background:var(--white);border:2px solid var(--navy);border-radius:5px}
+.sym.split{border-radius:50%;width:32px;min-width:32px}
+ul.rules{margin:6px 0 0 20px;line-height:1.6}
+ul.rules li{margin:4px 0}
+.print-note{margin-top:4px}
+@media print{
+  body{background:#fff}
+  header.masthead,nav.tabs,.print-note,.kicker{display:none}
+  .panel{display:none !important}
+  .panel.active{display:block !important}
+  .card,.week,.module{box-shadow:none;break-inside:avoid}
+  .wrap{max-width:none;padding:0}
+  a{color:var(--ink)}
+}
+
 /* ---------- Study Hall ---------- */
 .module{border:2px solid var(--navy);border-radius:10px;background:var(--paper);margin:14px 0;overflow:hidden;box-shadow:4px 4px 0 rgba(31,58,92,.18)}
 .module-head{
@@ -207,6 +229,7 @@ button.action:disabled{opacity:.5;cursor:not-allowed}
 table.ref{width:100%;border-collapse:collapse;margin:10px 0;background:var(--white)}
 table.ref th{background:var(--navy);color:var(--white);text-align:left;padding:8px 10px;font-size:13px}
 table.ref td{border:1px solid var(--maple-deep);padding:8px 10px;font-size:14px}
+table.ref td.mono{white-space:nowrap}
 table.ref tr:nth-child(even) td{background:var(--paper)}
 dl.gloss dt{font-weight:800;color:var(--red-dark);margin-top:10px}
 dl.gloss dd{margin-left:0;line-height:1.5}
@@ -229,6 +252,7 @@ dl.gloss dd{margin-left:0;line-height:1.5}
 <nav class="tabs" aria-label="Sections">
   <div class="tabs-inner" id="tabbar">
     <button class="tab-btn active" data-tab="path">The Path</button>
+    <button class="tab-btn" data-tab="basics">Basics</button>
     <button class="tab-btn" data-tab="study">Study Hall</button>
     <button class="tab-btn" data-tab="score">Score School</button>
     <button class="tab-btn" data-tab="practice">Practice</button>
@@ -246,6 +270,116 @@ dl.gloss dd{margin-left:0;line-height:1.5}
   <div class="progress-shell" aria-hidden="true"><div class="progress-fill" id="pathFill"></div></div>
   <p class="small" id="pathCount"></p>
   <div id="roadmap"></div>
+</section>
+
+<!-- ================= BASICS ================= -->
+<section class="panel" id="panel-basics">
+  <span class="kicker">Cheat sheet</span>
+  <h2 class="section-title">Bowling Basics</h2>
+  <p class="lede">Everything a new bowler needs to know before the first ball. Keep this open at the lanes or print it as a handout.</p>
+  <p class="small print-note">To print: use your browser's Print command while this tab is open. Only this page prints.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Pin numbers</h3>
+      <svg class="rack-svg" viewBox="0 0 310 280" role="img" aria-label="Pin rack seen from the bowler: back row 7 8 9 10, then 4 5 6, then 2 3, headpin 1 in front"><circle class="pinc" cx="50" cy="40" r="22"/><text x="50" y="40">7</text><circle class="pinc" cx="120" cy="40" r="22"/><text x="120" y="40">8</text><circle class="pinc" cx="190" cy="40" r="22"/><text x="190" y="40">9</text><circle class="pinc" cx="260" cy="40" r="22"/><text x="260" y="40">10</text><circle class="pinc" cx="85" cy="100" r="22"/><text x="85" y="100">4</text><circle class="pinc king" cx="155" cy="100" r="22"/><text x="155" y="100">5</text><circle class="pinc" cx="225" cy="100" r="22"/><text x="225" y="100">6</text><circle class="pinc" cx="120" cy="160" r="22"/><text x="120" y="160">2</text><circle class="pinc" cx="190" cy="160" r="22"/><text x="190" y="160">3</text><circle class="pinc head" cx="155" cy="220" r="22"/><text x="155" y="220">1</text><text class="cap" x="155" y="266">▲ You are standing here, at the foul line</text></svg>
+      <p class="small" style="text-align:center">Pins are numbered front to back, left to right, as you face them.</p>
+    </div>
+    <div class="card">
+      <h3>Pin names</h3>
+      <table class="ref">
+        <tr><th>Pin</th><th>Name</th><th>Why it matters</th></tr>
+        <tr><td class="mono">1</td><td>Headpin</td><td>The front pin. You usually need it for a strike.</td></tr>
+        <tr><td class="mono">5</td><td>Kingpin</td><td>The middle pin. Hard to reach, so hitting it is a sign of a good strike.</td></tr>
+        <tr><td class="mono">7, 10</td><td>Corner pins</td><td>The back corners. The hardest single-pin spares.</td></tr>
+        <tr><td class="mono">8, 9</td><td>Sleepers</td><td>Hidden directly behind the 2 or 3 pin. Easy to miss seeing.</td></tr>
+        <tr><td class="mono">1 + 3</td><td>Pocket (right-handed)</td><td>Where a right-hander aims for a strike: between the 1 and 3 pins.</td></tr>
+        <tr><td class="mono">1 + 2</td><td>Pocket (left-handed)</td><td>Where a left-hander aims for a strike. For a right-hander, hitting here is a "Brooklyn."</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The game in one minute</h3>
+    <p>A game has <b>10 frames</b>. In each frame you get up to <b>two balls</b> to knock down all 10 pins. The highest possible score is <b>300</b>.</p>
+    <table class="ref">
+      <tr><th>Term</th><th>What it means</th><th>How it scores</th></tr>
+      <tr><td><b>Strike</b></td><td>All 10 pins down with your first ball</td><td>10 + your next two balls</td></tr>
+      <tr><td><b>Spare</b></td><td>All 10 pins down using both balls</td><td>10 + your next ball</td></tr>
+      <tr><td><b>Open frame</b></td><td>Pins still standing after two balls</td><td>Just the pins you knocked down</td></tr>
+      <tr><td><b>Split</b></td><td>After the first ball, the headpin is down and the pins left standing have a gap between them</td><td>Scored like any other frame</td></tr>
+      <tr><td><b>Mark</b></td><td>A strike or a spare</td><td>—</td></tr>
+      <tr><td><b>10th frame</b></td><td>Strike or spare here and you get bonus balls (up to three balls total)</td><td>Bonus balls count only in the 10th</td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Score sheet symbols</h3>
+      <table class="ref">
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td><span class="sym">X</span></td><td>Strike</td></tr>
+        <tr><td><span class="sym">/</span></td><td>Spare</td></tr>
+        <tr><td><span class="sym">–</span></td><td>Miss: no pins on that ball (includes gutter balls)</td></tr>
+        <tr><td><span class="sym">F</span></td><td>Foul: you crossed the foul line, so that ball counts as zero</td></tr>
+        <tr><td><span class="sym split">8</span></td><td>A circled number means you left a split</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Strikes in a row</h3>
+      <table class="ref">
+        <tr><th>In a row</th><th>Called</th></tr>
+        <tr><td class="mono">2</td><td>Double</td></tr>
+        <tr><td class="mono">3</td><td>Turkey</td></tr>
+        <tr><td class="mono">4</td><td>Four-bagger (or hambone)</td></tr>
+        <tr><td class="mono">12</td><td>Perfect game: 300</td></tr>
+      </table>
+      <p class="small">A <b>clean game</b> means a strike or spare in every frame.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Lane etiquette</h3>
+      <ul class="rules">
+        <li><b>Yield to the right.</b> If the bowler on the lane next to you is ready at the same time, the one on the right goes first.</li>
+        <li><b>One bowler on the approach.</b> Wait in the seating area until it's your turn.</li>
+        <li><b>Never cross the foul line.</b> The lane is oiled and slippery past it.</li>
+        <li><b>Be ready when it's your turn,</b> but wait until the pinsetter has finished.</li>
+        <li><b>Use your own ball.</b> Don't pick up someone else's ball without asking.</li>
+        <li><b>No food or drinks on the approach,</b> and keep your shoes dry.</li>
+        <li><b>Roll the ball, don't drop or throw it.</b> Dropping it on the lane damages the boards.</li>
+        <li><b>Stay on your lane</b> and don't distract bowlers on other lanes.</li>
+        <li><b>Cheer for everyone,</b> including the other team.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Safety and gear</h3>
+      <ul class="rules">
+        <li><b>Wear bowling shoes.</b> Street shoes damage the approach and can make you slip.</li>
+        <li><b>Pick up the ball with two hands</b> from the ball return, with your palms on the sides.</li>
+        <li><b>Keep fingers clear of the ball return</b> so they don't get pinched between balls.</li>
+        <li><b>Choose the right weight:</b> about 10% of your body weight, up to 16 lb. If you can't hold it out in front of you for a few seconds, go lighter.</li>
+        <li><b>Check the fit:</b> your thumb should slide out easily, and your fingers shouldn't stretch to reach the holes.</li>
+        <li><b>Never go down the lane</b> to fix a pin or get a ball. Ask the front desk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Parts of the lane</h3>
+    <table class="ref">
+      <tr><th>Part</th><th>What it is</th></tr>
+      <tr><td><b>Approach</b></td><td>The area you walk on before you release the ball, at least 15 ft long</td></tr>
+      <tr><td><b>Foul line</b></td><td>The line where the approach ends and the lane begins</td></tr>
+      <tr><td><b>Dots</b></td><td>Marks on the approach that help you place your feet in the same spot every time</td></tr>
+      <tr><td><b>Arrows</b></td><td>Seven arrows about 15 ft past the foul line. Aim at these, not the pins.</td></tr>
+      <tr><td><b>Boards</b></td><td>The lane is 39 boards wide. Bowlers count them to describe where to stand and aim.</td></tr>
+      <tr><td><b>Gutters</b></td><td>The channels on each side of the lane</td></tr>
+      <tr><td><b>Pin deck</b></td><td>Where the pins stand, 60 ft from the foul line</td></tr>
+      <tr><td><b>Ball return</b></td><td>The machine that brings your ball back</td></tr>
+    </table>
+  </div>
 </section>
 
 <!-- ================= STUDY HALL ================= -->
@@ -388,7 +522,7 @@ dl.gloss dd{margin-left:0;line-height:1.5}
 /* tool.tab opens that tab; tool.module (optional) opens that Study Hall module */
 var ROADMAP = [
   {level:"Getting Started", blurb:"Gear, safety, and how to walk up and roll the ball.", steps:[
-    {t:"Gear and safety", learn:["Pick a house ball that's about 10% of your body weight (16 lb max)","Check the fit: your thumb should slide out cleanly","Lane etiquette: one bowler on the approach, yield to the right, never cross the foul line"], ready:"You can pick a ball that fits and explain the three etiquette rules", tools:[{label:"Study Hall M1", tab:"study", module:0}]},
+    {t:"Gear and safety", learn:["Pick a house ball that's about 10% of your body weight (16 lb max)","Check the fit: your thumb should slide out cleanly","Lane etiquette: one bowler on the approach, yield to the right, never cross the foul line"], ready:"You can pick a ball that fits and explain the three etiquette rules", tools:[{label:"Basics: etiquette and safety", tab:"basics"},{label:"Study Hall M1", tab:"study", module:0}]},
     {t:"The four-step approach", learn:["Right-handers start with the right foot","Step 1 is the pushaway: ball and foot move together","Walk it slowly with no ball before you add one"], ready:"You can walk your four steps and finish balanced at the line", tools:[{label:"Study Hall M2", tab:"study", module:1}]},
     {t:"A free armswing", learn:["Let the ball swing like a pendulum; don't force it","The ball reaches the top of the backswing as your slide starts","Practice from the foul line before adding steps"], ready:"10 shots in a row without muscling the swing", tools:[{label:"Practice: Foul-Line Drill", tab:"practice"}]}
   ]},
@@ -398,7 +532,7 @@ var ROADMAP = [
     {t:"Your pre-shot routine", learn:["Build a routine of 4 to 6 steps","Take one breath and use one cue before every shot","After a bad frame, think only about the next shot"], ready:"You use your full routine on every shot for 3 games", tools:[{label:"Study Hall M8", tab:"study", module:7},{label:"Practice: Routine Builder", tab:"practice"}]}
   ]},
   {level:"Scoring and Spares", blurb:"Know your score and pick up the pins you leave.", steps:[
-    {t:"Keeping score", learn:["A strike scores 10 plus your next two balls","A spare scores 10 plus your next ball","The 10th frame gets bonus balls for strikes and spares"], ready:"You can score a full game by hand with no mistakes", tools:[{label:"Score School", tab:"score"}]},
+    {t:"Keeping score", learn:["A strike scores 10 plus your next two balls","A spare scores 10 plus your next ball","The 10th frame gets bonus balls for strikes and spares"], ready:"You can score a full game by hand with no mistakes", tools:[{label:"Basics: score symbols", tab:"basics"},{label:"Score School", tab:"score"}]},
     {t:"The 3-6-9 spare system", learn:["Find the key pin: the one you have to hit first","Keep your target on the 2nd arrow and move only your feet","2-pin: 3 right, 4-pin: 6 right, 7-pin: 9 right; 3-pin: 3 left, 6-pin: 6 left, 10-pin: 9 left"], ready:"You can name the move for any single pin without looking", tools:[{label:"Study Hall M5", tab:"study", module:4},{label:"Practice: 3-6-9 Circuit", tab:"practice"}]},
     {t:"Corner pins and splits", learn:["Shoot corner pins from across the lane","Use a plastic ball for spares to keep it straight","On a split, take the pins you can make"], ready:"You make 6 of 10 single-pin spares", tools:[{label:"Study Hall M5", tab:"study", module:4},{label:"Practice: Corner-Pin Ladder", tab:"practice"}]}
   ]},

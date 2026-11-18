@@ -8,6 +8,7 @@ const dom = new JSDOM(html, {
     // stub canvas 2D context
     const noop = () => {};
     win.HTMLCanvasElement.prototype.getContext = () => new Proxy({}, { get: (t,k) => (k in t ? t[k] : noop), set: (t,k,v) => (t[k]=v, true) });
+    win.scrollTo = () => {};
     win.addEventListener('error', e => errors.push(e.message));
   }
 });
@@ -51,6 +52,15 @@ ok(d.getElementById('qres7').textContent.includes('mastered'), 'M8 quiz grades a
 // score demo
 click(d.getElementById('scoreDemo'));
 ok(d.getElementById('scoreTotal').textContent === 'Final: 167', 'demo game scores 167');
+
+// basics cheat sheet
+ok(tabs[1] === 'basics', 'Basics tab sits right after The Path');
+const basics = d.getElementById('panel-basics');
+ok(basics.querySelectorAll('.rack-svg circle').length === 10, 'pin diagram shows 10 pins');
+ok([...basics.querySelectorAll('.rack-svg text')].filter(t=>/^\d+$/.test(t.textContent)).map(t=>+t.textContent).sort((a,b)=>a-b).join(',') === '1,2,3,4,5,6,7,8,9,10', 'pins numbered 1-10');
+['Headpin','Kingpin','Strike','Spare','Split','Turkey','Yield to the right','Foul line'].forEach(t => ok(basics.textContent.includes(t), `cheat sheet covers: ${t}`));
+click(d.querySelector('#roadmap .tool-link[data-goto="basics"]'));
+ok(basics.classList.contains('active'), 'roadmap link opens Basics');
 
 // practice tab
 ok(d.querySelectorAll('#drillList .drill').length === 8, '8 student drills');
