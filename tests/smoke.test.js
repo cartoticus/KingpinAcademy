@@ -21,6 +21,9 @@ const click = el => el.dispatchEvent(new w.MouseEvent('click',{bubbles:true}));
 const tabs = [...d.querySelectorAll('.tab-btn')].map(b=>b.dataset.tab);
 console.log('tabs:', tabs.join(', '));
 ok(!tabs.includes('coach') && !tabs.includes('cert'), 'no coach/cert tabs');
+ok(!tabs.includes('sim') && !tabs.includes('spare'), 'no simulator or spare lab tabs');
+ok(!d.getElementById('laneCanvas') && !d.getElementById('pinRack'), 'simulator and spare lab removed from the page');
+ok(!/imulator|Spare Lab/.test(d.body.textContent), 'no leftover simulator or spare lab text');
 tabs.forEach(t => { click(d.querySelector(`[data-tab="${t}"]`)); ok(d.getElementById('panel-'+t).classList.contains('active'), `tab ${t} opens`); });
 
 ok(d.querySelectorAll('.level').length === 4, '4 roadmap levels rendered');
@@ -32,6 +35,8 @@ first.dispatchEvent(new w.Event('change',{bubbles:true}));
 ok(d.querySelectorAll('#roadmap .week')[1].classList.contains('next'), 'checking step 1 moves Up next to step 2');
 ok(d.querySelector('.level-count[data-level="0"]').textContent === '1 of 3', 'level progress shows 1 of 3');
 click(d.querySelector('#roadmap .tool-link[data-module="4"]'));
+const links = [...d.querySelectorAll('#roadmap .tool-link')].map(b => b.dataset.goto);
+ok(links.every(t => tabs.includes(t)), 'every roadmap link points to a tab that exists');
 ok(d.getElementById('panel-study').classList.contains('active') && d.querySelectorAll('#moduleList .module')[4].classList.contains('open'), 'step link opens Study Hall at the right module');
 click(d.querySelector('[data-tab="path"]'));
 ok(d.querySelectorAll('.module').length === 8, '8 modules rendered');
@@ -43,18 +48,9 @@ ok([...d.querySelectorAll('.module-head')].pop().textContent.includes('Mental Ga
 click(d.querySelector('[data-grade="7"]'));
 ok(d.getElementById('qres7').textContent.includes('mastered'), 'M8 quiz grades as mastered');
 
-// simulator
-d.getElementById('simBall').value = 'reactivePolished';
-click(d.getElementById('simThrow'));
-ok(/POCKET/.test(d.getElementById('simReadout').innerHTML), 'default throw hits pocket');
-
 // score demo
 click(d.getElementById('scoreDemo'));
 ok(d.getElementById('scoreTotal').textContent === 'Final: 167', 'demo game scores 167');
-
-// spare preset
-click([...d.querySelectorAll('#sparePresets button')].find(b=>b.textContent==='10-pin'));
-ok(/9 boards LEFT/.test(d.getElementById('spareAdvice').innerHTML), '10-pin advice: 9 left');
 
 // practice tab
 ok(d.querySelectorAll('#drillList .drill').length === 8, '8 student drills');

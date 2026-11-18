@@ -1,5 +1,5 @@
 // Pulls the app's <script> out of index.html and loads it as a module,
-// so the scoring and physics functions can be tested without a browser.
+// so the scoring functions can be tested without a browser.
 const fs = require('fs');
 const path = require('path');
 const Module = require('module');
