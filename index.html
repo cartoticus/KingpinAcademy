@@ -140,7 +140,20 @@ button.action:disabled{opacity:.5;cursor:not-allowed}
 .week h3{margin-top:0}
 .week ul{margin:6px 0 0 18px;line-height:1.5}
 .week .goal{font-weight:700;color:var(--navy);font-size:13px;margin-top:8px}
-.week label{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:700;font-size:13px;cursor:pointer;color:var(--red-dark)}
+\1.level{margin:26px 0 8px}
+.level-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:var(--navy);color:var(--white);border-radius:10px;padding:14px 18px;border-bottom:4px solid var(--gold)}
+.level-head h3{color:var(--white);margin:2px 0 2px;font-family:'Alfa Slab One',serif;font-size:20px;font-weight:400}
+.level-head p{font-size:14px;opacity:.85}
+.level-tag{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.week.done{opacity:.62}
+.week.done .week-num{background:var(--ok)}
+.week.next{border-color:var(--red);box-shadow:4px 4px 0 rgba(190,58,46,.35)}
+.here-flag{display:none;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.week.next .here-flag{display:block}
+.tool-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tool-link{font-family:'Public Sans',sans-serif;font-size:12px;font-weight:800;background:var(--white);color:var(--navy);border:2px solid var(--navy);border-radius:999px;padding:4px 11px;cursor:pointer}
+.tool-link:hover{background:var(--navy);color:var(--white)}
+.tool-link:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .progress-shell{background:var(--white);border:2px solid var(--navy);border-radius:999px;height:22px;overflow:hidden;margin-top:10px}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0%;transition:width .3s ease}
 
@@ -252,12 +265,12 @@ dl.gloss dd{margin-left:0;line-height:1.5}
 
 <!-- ================= THE PATH ================= -->
 <section class="panel active" id="panel-path">
-  <span class="kicker">Your 12-week program</span>
-  <h2 class="section-title">From First Frame to League Night</h2>
-  <p class="lede">Work each week in order. Every week pairs on-lane practice with a Study Hall module and a tool in this app. Check off weeks as you finish them — progress lives for this session only, like a fresh pair of house shoes.</p>
+  <span class="kicker">Self-paced roadmap</span>
+  <h2 class="section-title">Your Road to Bowling</h2>
+  <p class="lede">Go at your own speed. Each step tells you what to learn, which tool in this app helps, and how you'll know you're ready to move on. Some steps take one visit to the lanes and some take a whole season. Both are fine. Check off a step when you can do what it says.</p>
   <div class="progress-shell" aria-hidden="true"><div class="progress-fill" id="pathFill"></div></div>
-  <p class="small" id="pathCount">0 of 12 weeks complete</p>
-  <div id="weekList"></div>
+  <p class="small" id="pathCount"></p>
+  <div id="roadmap"></div>
 </section>
 
 <!-- ================= STUDY HALL ================= -->
@@ -446,20 +459,30 @@ dl.gloss dd{margin-left:0;line-height:1.5}
    DOM work only runs when document exists.
    ===================================================== */
 
-/* ---------------- Data: 12-week path ---------------- */
-var WEEKS = [
-  {t:"Gear, safety, and the four-step approach", items:["Get fitted for a house ball (~10% of body weight)","Learn the four-step approach: pushaway on step 1","Walk-throughs with no ball, then slow rolls"], goal:"Finish 3 games with a balanced finish on every shot", tool:"Study Hall M1–M2"},
-  {t:"Free armswing and timing", items:["Pendulum swing drill — gravity does the work","Ball at top of backswing as slide foot starts","Foul-line drill: one-step swings"], goal:"10 shots in a row without muscling the swing", tool:"Practice: Foul-Line Drill"},
-  {t:"Targeting the arrows", items:["Aim at arrows (15 ft away), never the pins","Find your strike line over 2nd arrow","Track your laydown board"], goal:"Hit your target arrow 7 of 10 shots", tool:"Lane Simulator"},
-  {t:"Release and roll", items:["Thumb out first, fingers lift through the ball","Handshake finish position","Learn what your ball's roll looks like"], goal:"Consistent forward roll — no floppy wrist", tool:"Study Hall M3"},
-  {t:"Scoring mastery", items:["Score full games by hand — no monitors","Strike and spare bonus math cold","10th-frame edge cases"], goal:"Score a full game by hand with zero errors", tool:"Score School"},
-  {t:"The 3-6-9 spare system", items:["Key pin identification","Feet move, target stays at 2nd arrow","Corner-pin ladder drill"], goal:"Convert 6 of 10 single-pin spares", tool:"Spare Lab"},
-  {t:"Reading lanes and oil", items:["Rule of 31 breakpoint math","House vs sport patterns","Watch ball reaction, not just pinfall"], goal:"Explain your breakpoint for a 40-ft shot", tool:"Simulator + Reference"},
-  {t:"League play under pressure", items:["Bowl 3 games with a pre-shot routine","Track spares and pocket hits, not just score","Breathing reset between frames"], goal:"Pre-shot routine on 100% of shots", tool:"Practice: Self-Check"},
-  {t:"Mental game and pre-shot routine", items:["Build your routine in the Practice tab","One breath and one cue before every shot","Reset after a bad frame: next shot only"], goal:"Use your full routine on every shot for 3 games", tool:"Study Hall M8 + Practice"},
-  {t:"Making adjustments", items:["Follow the miss: high = move left, light = move right","The 2-and-1 move: feet 2 boards, target 1 board, same direction","Expect to move left as the lanes change"], goal:"Make the right move within 2 frames of a miss", tool:"Lane Simulator"},
-  {t:"Your equipment", items:["Get fitted at a pro shop","Use a plastic ball for spares","Try the ball selector in the simulator to see coverstock differences"], goal:"Know which ball you throw at strikes and which at spares, and why", tool:"Study Hall M7 + Simulator"},
-  {t:"League-ready", items:["Bowl a 3-game set with your routine","Track pocket hits and single-pin spares made","Set 2 goals for next season with your coach"], goal:"A full 3-game set with your stats written down", tool:"Score School + Practice"}
+/* ---------------- Data: self-paced roadmap ---------------- */
+/* tool.tab opens that tab; tool.module (optional) opens that Study Hall module */
+var ROADMAP = [
+  {level:"Getting Started", blurb:"Gear, safety, and how to walk up and roll the ball.", steps:[
+    {t:"Gear and safety", learn:["Pick a house ball that's about 10% of your body weight (16 lb max)","Check the fit: your thumb should slide out cleanly","Lane etiquette: one bowler on the approach, yield to the right, never cross the foul line"], ready:"You can pick a ball that fits and explain the three etiquette rules", tools:[{label:"Study Hall M1", tab:"study", module:0}]},
+    {t:"The four-step approach", learn:["Right-handers start with the right foot","Step 1 is the pushaway: ball and foot move together","Walk it slowly with no ball before you add one"], ready:"You can walk your four steps and finish balanced at the line", tools:[{label:"Study Hall M2", tab:"study", module:1}]},
+    {t:"A free armswing", learn:["Let the ball swing like a pendulum; don't force it","The ball reaches the top of the backswing as your slide starts","Practice from the foul line before adding steps"], ready:"10 shots in a row without muscling the swing", tools:[{label:"Practice: Foul-Line Drill", tab:"practice"}]}
+  ]},
+  {level:"Making Good Shots", blurb:"Aim, release, and do it the same way every time.", steps:[
+    {t:"Targeting the arrows", learn:["Aim at the arrows 15 feet away, not the pins","Start with your target on the 2nd arrow","Notice where the ball first touches the lane"], ready:"You hit your target arrow 7 of 10 shots", tools:[{label:"Study Hall M4", tab:"study", module:3},{label:"Lane Simulator", tab:"sim"}]},
+    {t:"Release and roll", learn:["Thumb comes out first, then the fingers lift","Finish with your hand in a handshake position","Watch how your ball skids, hooks and rolls"], ready:"Your ball rolls forward consistently, with no floppy wrist", tools:[{label:"Study Hall M3", tab:"study", module:2}]},
+    {t:"Your pre-shot routine", learn:["Build a routine of 4 to 6 steps","Take one breath and use one cue before every shot","After a bad frame, think only about the next shot"], ready:"You use your full routine on every shot for 3 games", tools:[{label:"Study Hall M8", tab:"study", module:7},{label:"Practice: Routine Builder", tab:"practice"}]}
+  ]},
+  {level:"Scoring and Spares", blurb:"Know your score and pick up the pins you leave.", steps:[
+    {t:"Keeping score", learn:["A strike scores 10 plus your next two balls","A spare scores 10 plus your next ball","The 10th frame gets bonus balls for strikes and spares"], ready:"You can score a full game by hand with no mistakes", tools:[{label:"Score School", tab:"score"}]},
+    {t:"The 3-6-9 spare system", learn:["Find the key pin: the one you have to hit first","Keep your target on the 2nd arrow and move only your feet","2-pin: 3 right, 4-pin: 6 right, 7-pin: 9 right; 3-pin: 3 left, 6-pin: 6 left, 10-pin: 9 left"], ready:"You can name the move for any single pin without looking", tools:[{label:"Study Hall M5", tab:"study", module:4},{label:"Spare Lab", tab:"spare"}]},
+    {t:"Corner pins and splits", learn:["Shoot corner pins from across the lane","Use a plastic ball for spares to keep it straight","On a split, take the pins you can make"], ready:"You make 6 of 10 single-pin spares", tools:[{label:"Spare Lab", tab:"spare"},{label:"Practice: Corner-Pin Ladder", tab:"practice"}]}
+  ]},
+  {level:"Playing the Lanes", blurb:"Read the oil, adjust, and bowl a full league set.", steps:[
+    {t:"Oil patterns", learn:["Lanes are oiled, and the oil decides how the ball hooks","House shots forgive misses; sport patterns don't","Rule of 31: pattern length minus 31 is the board where your ball should leave the oil"], ready:"You can work out the breakpoint board for a 40-foot pattern", tools:[{label:"Study Hall M6", tab:"study", module:5},{label:"Lane Simulator", tab:"sim"},{label:"Reference", tab:"ref"}]},
+    {t:"Making adjustments", learn:["Follow the miss: high means move left, light means move right","The 2-and-1 move: feet 2 boards, target 1 board, same direction","Expect to move left as the lanes change during play"], ready:"You make the right move within 2 frames of a miss", tools:[{label:"Lane Simulator", tab:"sim"}]},
+    {t:"Your equipment", learn:["Get fitted at a pro shop","Know which ball you use for strikes and which for spares","Try each coverstock in the simulator to see how it hooks"], ready:"You can explain why you use each of your balls", tools:[{label:"Study Hall M7", tab:"study", module:6},{label:"Lane Simulator", tab:"sim"}]},
+    {t:"League-ready", learn:["Bowl a 3-game set using your routine","Write down pocket hits and single-pin spares made","Set two goals with your coach"], ready:"You bowl a full 3-game set with your stats written down", tools:[{label:"Score School", tab:"score"},{label:"Practice", tab:"practice"}]}
+  ]}
 ];
 
 /* ---------------- Data: study modules ---------------- */
@@ -791,25 +814,65 @@ function initUI(){
     });
   });
 
-  /* ------- The Path ------- */
-  var weekList = $('#weekList');
-  var done = 0;
-  WEEKS.forEach(function(w, idx){
-    var el = document.createElement('div');
-    el.className = 'week';
-    el.innerHTML =
-      '<div class="week-num">WEEK<b>' + (idx+1) + '</b></div>' +
-      '<div><h3>' + w.t + '</h3><ul>' +
-      w.items.map(function(it){ return '<li>' + it + '</li>'; }).join('') +
-      '</ul><div class="goal">🎯 Goal: ' + w.goal + ' · <span class="badge navy">' + w.tool + '</span></div>' +
-      '<label><input type="checkbox" data-week="' + idx + '"> Mark week ' + (idx+1) + ' complete</label></div>';
-    weekList.appendChild(el);
+  /* ------- The Path (self-paced roadmap) ------- */
+  var roadmap = $('#roadmap');
+  var totalSteps = 0;
+  ROADMAP.forEach(function(lv, li){
+    var sec = document.createElement('div');
+    sec.className = 'level';
+    sec.innerHTML = '<div class="level-head"><div><span class="level-tag">Level ' + (li+1) + '</span><h3>' + lv.level + '</h3><p>' + lv.blurb + '</p></div>' +
+      '<span class="badge gold level-count" data-level="' + li + '"></span></div>';
+    lv.steps.forEach(function(st){
+      totalSteps++;
+      var n = totalSteps;
+      var el = document.createElement('div');
+      el.className = 'week';
+      el.dataset.level = li;
+      el.innerHTML =
+        '<div class="week-num">STEP<b>' + n + '</b></div>' +
+        '<div><div class="here-flag">Up next</div><h3>' + st.t + '</h3><ul>' +
+        st.learn.map(function(it){ return '<li>' + it + '</li>'; }).join('') +
+        '</ul><div class="goal">Ready to move on when: ' + st.ready + '</div>' +
+        '<div class="tool-links">' + st.tools.map(function(tl){
+          return '<button class="tool-link" data-goto="' + tl.tab + '"' + (tl.module !== undefined ? ' data-module="' + tl.module + '"' : '') + '>' + tl.label + ' →</button>';
+        }).join('') + '</div>' +
+        '<label><input type="checkbox" data-step="' + n + '"> I can do this</label></div>';
+      sec.appendChild(el);
+    });
+    roadmap.appendChild(sec);
   });
-  weekList.addEventListener('change', function(){
-    var checked = weekList.querySelectorAll('input:checked').length;
-    $('#pathFill').style.width = (checked / 12 * 100) + '%';
-    $('#pathCount').textContent = checked + ' of 12 weeks complete' + (checked === 12 ? ' — you\'re league-ready. Go bowl.' : '');
+  function updateRoadmap(){
+    var boxes = Array.prototype.slice.call(roadmap.querySelectorAll('input[type=checkbox]'));
+    var checked = boxes.filter(function(b){ return b.checked; }).length;
+    $('#pathFill').style.width = (checked / totalSteps * 100) + '%';
+    $('#pathCount').textContent = checked + ' of ' + totalSteps + ' steps done' +
+      (checked === totalSteps ? ' — you know how to bowl. See you on league night.' : '');
+    var next = boxes.filter(function(b){ return !b.checked; })[0];
+    roadmap.querySelectorAll('.week').forEach(function(w){
+      var box = w.querySelector('input');
+      w.classList.toggle('done', box.checked);
+      w.classList.toggle('next', box === next);
+    });
+    ROADMAP.forEach(function(lv, li){
+      var lvBoxes = roadmap.querySelectorAll('.week[data-level="' + li + '"] input');
+      var c = Array.prototype.filter.call(lvBoxes, function(b){ return b.checked; }).length;
+      roadmap.querySelector('.level-count[data-level="' + li + '"]').textContent = c === lvBoxes.length ? 'Level complete' : c + ' of ' + lvBoxes.length;
+    });
+  }
+  roadmap.addEventListener('change', updateRoadmap);
+  roadmap.addEventListener('click', function(e){
+    var b = e.target.closest('.tool-link');
+    if(!b) return;
+    document.querySelector('.tab-btn[data-tab="' + b.dataset.goto + '"]').click();
+    if(b.dataset.module !== undefined){
+      var mod = document.querySelectorAll('#moduleList .module')[parseInt(b.dataset.module, 10)];
+      if(mod && !mod.classList.contains('open')) mod.querySelector('.module-head').click();
+      if(mod && mod.scrollIntoView) mod.scrollIntoView({behavior:'smooth', block:'start'});
+    } else if (window.scrollTo) {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
   });
+  updateRoadmap();
 
   /* ------- Study Hall ------- */
   var moduleList = $('#moduleList');

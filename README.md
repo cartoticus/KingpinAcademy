@@ -6,7 +6,7 @@ A single-page app for learning to bowl, from your first frame to league night. O
 
 | Tab | What it does |
 |---|---|
-| **The Path** | A 12-week program. Each week pairs lane practice with a lesson and a tool in the app. |
+| **The Path** | A self-paced roadmap in four levels. Each step says what to learn, links to the tool that helps, and tells you when you are ready to move on. |
 | **Study Hall** | Eight short lessons, each with a quiz you can retry: fundamentals, the four-step approach, release, targeting, spares, oil patterns, equipment, and the mental game. |
 | **Lane Simulator** | Choose an oil pattern, a ball, your laydown board, speed and rev rate, then watch the ball's path to the pins. |
 | **Spare Lab** | Tap pins to set up a spare and get the 3-6-9 move for it, with warnings for splits and sleepers. |

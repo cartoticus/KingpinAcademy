@@ -23,7 +23,17 @@ console.log('tabs:', tabs.join(', '));
 ok(!tabs.includes('coach') && !tabs.includes('cert'), 'no coach/cert tabs');
 tabs.forEach(t => { click(d.querySelector(`[data-tab="${t}"]`)); ok(d.getElementById('panel-'+t).classList.contains('active'), `tab ${t} opens`); });
 
-ok(d.querySelectorAll('.week').length === 12, '12 weeks rendered');
+ok(d.querySelectorAll('.level').length === 4, '4 roadmap levels rendered');
+ok(d.querySelectorAll('#roadmap .week').length === 13, '13 roadmap steps rendered');
+ok(!/week/i.test(d.getElementById('panel-path').textContent), 'no week-based wording on The Path');
+ok(d.querySelector('#roadmap .week').classList.contains('next'), 'step 1 is marked Up next');
+const first = d.querySelector('#roadmap input'); first.checked = true;
+first.dispatchEvent(new w.Event('change',{bubbles:true}));
+ok(d.querySelectorAll('#roadmap .week')[1].classList.contains('next'), 'checking step 1 moves Up next to step 2');
+ok(d.querySelector('.level-count[data-level="0"]').textContent === '1 of 3', 'level progress shows 1 of 3');
+click(d.querySelector('#roadmap .tool-link[data-module="4"]'));
+ok(d.getElementById('panel-study').classList.contains('active') && d.querySelectorAll('#moduleList .module')[4].classList.contains('open'), 'step link opens Study Hall at the right module');
+click(d.querySelector('[data-tab="path"]'));
 ok(d.querySelectorAll('.module').length === 8, '8 modules rendered');
 ok(d.querySelector('.module-head').textContent.includes('M1'), 'module 1 present');
 ok([...d.querySelectorAll('.module-head')].pop().textContent.includes('Mental Game'), 'M8 is Mental Game');
@@ -56,9 +66,10 @@ extra.dispatchEvent(new w.Event('change',{bubbles:true}));
 ok(d.querySelectorAll('#routineCard li').length === 6, 'adding a step updates the routine card');
 
 // path completion message
-d.querySelectorAll('#weekList input').forEach(i=>i.checked=true);
-d.getElementById('weekList').dispatchEvent(new w.Event('change',{bubbles:true}));
-ok(d.getElementById('pathCount').textContent.includes('league-ready'), 'completion message is student-facing');
+d.querySelectorAll('#roadmap input').forEach(i=>i.checked=true);
+d.getElementById('roadmap').dispatchEvent(new w.Event('change',{bubbles:true}));
+ok(d.getElementById('pathCount').textContent.includes('know how to bowl'), 'completion message is student-facing');
+ok(d.querySelector('.level-count[data-level="3"]').textContent === 'Level complete', 'level marked complete');
 
 ok(errors.length === 0, 'no runtime errors' + (errors.length ? ': '+errors.join('; ') : ''));
 console.log(`\nsmoke: ${n} checks, ${fail} failures`);
