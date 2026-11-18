@@ -1,0 +1,12 @@
+{
+  "name": "kingpin-academy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kingpin Academy Student Edition: a single-page app for learning to bowl.",
+  "scripts": {
+    "test": "node tests/scoring.test.js && node tests/physics.test.js && node tests/smoke.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}

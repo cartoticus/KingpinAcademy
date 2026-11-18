@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingpin Academy — Student Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Public+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --maple:#EDD9A3;
+  --maple-dark:#DFC488;
+  --maple-deep:#C9A96B;
+  --red:#BE3A2E;
+  --red-dark:#9C2F25;
+  --navy:#1F3A5C;
+  --navy-deep:#152A44;
+  --oil:#3E6E9E;
+  --gold:#B98A1F;
+  --ink:#2A2117;
+  --paper:#FBF4E2;
+  --white:#FFFDF6;
+  --ok:#3E7A4E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Public Sans',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    repeating-linear-gradient(90deg,
+      var(--maple) 0px, var(--maple) 34px,
+      var(--maple-dark) 34px, var(--maple-dark) 36px);
+  min-height:100vh;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- Masthead ---------- */
+header.masthead{
+  background:var(--navy);
+  color:var(--white);
+  border-bottom:6px solid var(--red);
+  padding:26px 16px 20px;
+}
+.masthead-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.pin-mark{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Alfa Slab One',serif;font-size:26px;color:var(--red);
+  border:4px solid var(--gold);flex-shrink:0;
+}
+h1.brand{
+  font-family:'Alfa Slab One',serif;
+  font-size:clamp(26px,5vw,40px);
+  letter-spacing:.5px;line-height:1;
+}
+h1.brand span{color:var(--gold)}
+.tagline{font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-top:6px;font-weight:600}
+
+/* ---------- Tabs ---------- */
+nav.tabs{
+  background:var(--navy-deep);
+  position:sticky;top:0;z-index:50;
+  border-bottom:4px solid var(--gold);
+  overflow-x:auto;
+}
+.tabs-inner{max-width:1080px;margin:0 auto;display:flex}
+.tab-btn{
+  appearance:none;border:0;background:transparent;color:#C9D6E6;
+  font-family:'Public Sans',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:14px 14px;cursor:pointer;white-space:nowrap;
+  border-bottom:4px solid transparent;margin-bottom:-4px;
+}
+.tab-btn:hover{color:var(--white)}
+.tab-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--red);background:rgba(190,58,46,.14)}
+.panel{display:none;animation:fadein .25s ease}
+.panel.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.panel{animation:none}}
+
+/* ---------- Cards & type ---------- */
+.card{
+  background:var(--paper);
+  border:2px solid var(--navy);
+  border-radius:10px;
+  box-shadow:4px 4px 0 rgba(31,58,92,.25);
+  padding:22px;margin:22px 0;
+}
+h2.section-title{
+  font-family:'Alfa Slab One',serif;font-size:clamp(22px,3.4vw,30px);
+  color:var(--navy);margin:28px 0 4px;
+}
+h3{font-size:17px;color:var(--red-dark);margin:14px 0 6px}
+.kicker{
+  display:inline-block;font-size:11px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--paper);background:var(--red);
+  padding:4px 10px;border-radius:3px;margin-top:24px;
+}
+p.lede{font-size:15px;max-width:70ch;margin:8px 0 0;line-height:1.55}
+.card p{line-height:1.55;margin:8px 0}
+.mono{font-family:'IBM Plex Mono',monospace}
+.small{font-size:13px;color:#5b4d3c}
+a{color:var(--oil);font-weight:600}
+a:hover{color:var(--navy)}
+
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase}
+.badge.gold{background:var(--gold);color:var(--white)}
+.badge.navy{background:var(--navy);color:var(--white)}
+.badge.red{background:var(--red);color:var(--white)}
+.badge.ok{background:var(--ok);color:var(--white)}
+
+button.action{
+  font-family:'Public Sans',sans-serif;font-weight:800;font-size:14px;
+  background:var(--red);color:var(--white);border:0;border-radius:6px;
+  padding:10px 18px;cursor:pointer;letter-spacing:.03em;
+  box-shadow:0 3px 0 var(--red-dark);
+}
+button.action:hover{filter:brightness(1.06)}
+button.action:active{transform:translateY(2px);box-shadow:none}
+button.action:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+button.action.secondary{background:var(--navy);box-shadow:0 3px 0 var(--navy-deep)}
+button.action:disabled{opacity:.5;cursor:not-allowed}
+
+/* ---------- Path (roadmap) ---------- */
+.week{
+  display:grid;grid-template-columns:74px 1fr;gap:16px;align-items:start;
+  background:var(--paper);border:2px solid var(--navy);border-radius:10px;
+  padding:16px;margin:12px 0;box-shadow:4px 4px 0 rgba(31,58,92,.18);
+}
+.week-num{
+  font-family:'Alfa Slab One',serif;font-size:15px;color:var(--white);
+  background:var(--navy);border-radius:8px;text-align:center;padding:10px 4px;
+  line-height:1.25;
+}
+.week-num b{display:block;font-size:24px;color:var(--gold)}
+.week h3{margin-top:0}
+.week ul{margin:6px 0 0 18px;line-height:1.5}
+.week .goal{font-weight:700;color:var(--navy);font-size:13px;margin-top:8px}
+.week label{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:700;font-size:13px;cursor:pointer;color:var(--red-dark)}
+.progress-shell{background:var(--white);border:2px solid var(--navy);border-radius:999px;height:22px;overflow:hidden;margin-top:10px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0%;transition:width .3s ease}
+
+/* ---------- Study Hall ---------- */
+.module{border:2px solid var(--navy);border-radius:10px;background:var(--paper);margin:14px 0;overflow:hidden;box-shadow:4px 4px 0 rgba(31,58,92,.18)}
+.module-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  width:100%;background:var(--navy);color:var(--white);border:0;
+  padding:14px 18px;cursor:pointer;text-align:left;
+  font-family:'Public Sans',sans-serif;font-weight:800;font-size:15px;
+}
+.module-head:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.module-body{display:none;padding:18px}
+.module.open .module-body{display:block}
+.module-body ul{margin:6px 0 12px 20px;line-height:1.6}
+.quiz{border-top:2px dashed var(--maple-deep);margin-top:14px;padding-top:14px}
+.q{margin:12px 0}
+.q .stem{font-weight:700;margin-bottom:6px}
+.q label{display:block;padding:7px 10px;border:2px solid var(--maple-deep);border-radius:6px;margin:5px 0;cursor:pointer;background:var(--white);font-size:14px}
+.q label:hover{border-color:var(--oil)}
+.q label.correct{border-color:var(--ok);background:#E9F4EC;font-weight:700}
+.q label.wrong{border-color:var(--red);background:#F9E9E7}
+.quiz-result{font-weight:800;margin-top:10px}
+
+/* ---------- Simulator ---------- */
+.sim-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+@media (max-width:760px){.sim-grid{grid-template-columns:1fr}}
+.controls{background:var(--paper);border:2px solid var(--navy);border-radius:10px;padding:16px;box-shadow:4px 4px 0 rgba(31,58,92,.18)}
+.controls label{display:block;font-weight:700;font-size:13px;margin:12px 0 4px;color:var(--navy)}
+.controls select,.controls input[type=range]{width:100%}
+.controls select{padding:8px;border:2px solid var(--navy);border-radius:6px;font-family:inherit;font-weight:600;background:var(--white)}
+.readout{font-family:'IBM Plex Mono',monospace;font-size:13px;background:var(--navy);color:#D9E4F0;border-radius:8px;padding:12px;margin-top:14px;line-height:1.7}
+.readout b{color:var(--gold)}
+canvas#laneCanvas{background:var(--maple);border:3px solid var(--navy);border-radius:8px;width:100%;height:auto;display:block}
+
+/* ---------- Spare Lab ---------- */
+.rack{display:flex;flex-direction:column;gap:10px;align-items:center;padding:18px 0 8px}
+.rack-row{display:flex;gap:26px}
+.pin{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--white);border:3px solid var(--navy);
+  font-family:'Alfa Slab One',serif;font-size:16px;color:var(--navy);
+  cursor:pointer;position:relative;
+}
+.pin::after{content:"";position:absolute;top:7px;left:8px;right:8px;height:7px;border-radius:4px;background:var(--red);opacity:.85}
+.pin.down{opacity:.22;border-style:dashed}
+.pin:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.advice{background:var(--navy);color:var(--white);border-radius:10px;padding:16px 18px;margin-top:14px;line-height:1.6}
+.advice b{color:var(--gold)}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+/* ---------- Score School ---------- */
+.frames{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:16px 0}
+.frame{background:var(--white);border:2px solid var(--navy);border-radius:6px;text-align:center;overflow:hidden}
+.frame .fnum{font-size:10px;font-weight:800;background:var(--navy);color:var(--white);padding:2px 0;letter-spacing:.06em}
+.frame .balls{display:flex;justify-content:flex-end;min-height:26px;border-bottom:1px solid var(--maple-deep)}
+.frame .ball{width:24px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;border-left:1px solid var(--maple-deep);padding:3px 0}
+.frame .cum{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;padding:4px 0;min-height:26px}
+.frame.current{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+.pinpad{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pinpad button{
+  width:52px;height:44px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;
+  border:2px solid var(--navy);border-radius:6px;background:var(--white);cursor:pointer;
+}
+.pinpad button:hover:not(:disabled){background:var(--maple)}
+.pinpad button:disabled{opacity:.35;cursor:not-allowed}
+.pinpad button:focus-visible{outline:3px solid var(--gold)}
+.score-total{font-family:'Alfa Slab One',serif;font-size:30px;color:var(--red);margin-top:10px}
+
+/* ---------- Practice / Reference ---------- */
+.drill{border-left:6px solid var(--gold);background:var(--white);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;border-top:1px solid var(--maple-deep);border-right:1px solid var(--maple-deep);border-bottom:1px solid var(--maple-deep)}
+.drill h3{margin:0 0 4px}
+.drill .meta{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--oil)}
+table.ref{width:100%;border-collapse:collapse;margin:10px 0;background:var(--white)}
+table.ref th{background:var(--navy);color:var(--white);text-align:left;padding:8px 10px;font-size:13px}
+table.ref td{border:1px solid var(--maple-deep);padding:8px 10px;font-size:14px}
+table.ref tr:nth-child(even) td{background:var(--paper)}
+dl.gloss dt{font-weight:800;color:var(--red-dark);margin-top:10px}
+dl.gloss dd{margin-left:0;line-height:1.5}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="pin-mark">K</div>
+    <div>
+      <h1 class="brand">KINGPIN <span>ACADEMY</span></h1>
+      <span class="badge gold" style="margin-top:6px">Student Edition</span>
+      <div class="tagline">Learn to bowl · First frame to league night</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-inner" id="tabbar">
+    <button class="tab-btn active" data-tab="path">The Path</button>
+    <button class="tab-btn" data-tab="study">Study Hall</button>
+    <button class="tab-btn" data-tab="sim">Lane Simulator</button>
+    <button class="tab-btn" data-tab="spare">Spare Lab</button>
+    <button class="tab-btn" data-tab="score">Score School</button>
+    <button class="tab-btn" data-tab="practice">Practice</button>
+    <button class="tab-btn" data-tab="ref">Reference</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ================= THE PATH ================= -->
+<section class="panel active" id="panel-path">
+  <span class="kicker">Your 12-week program</span>
+  <h2 class="section-title">From First Frame to League Night</h2>
+  <p class="lede">Work each week in order. Every week pairs on-lane practice with a Study Hall module and a tool in this app. Check off weeks as you finish them — progress lives for this session only, like a fresh pair of house shoes.</p>
+  <div class="progress-shell" aria-hidden="true"><div class="progress-fill" id="pathFill"></div></div>
+  <p class="small" id="pathCount">0 of 12 weeks complete</p>
+  <div id="weekList"></div>
+</section>
+
+<!-- ================= STUDY HALL ================= -->
+<section class="panel" id="panel-study">
+  <span class="kicker">Eight modules · Inline quizzes</span>
+  <h2 class="section-title">Study Hall</h2>
+  <p class="lede">Each module is a compact lesson followed by a quiz. Miss a question and you can retry until it clicks — that's how good bowlers learn. Aim for 100% before moving on.</p>
+  <div id="moduleList"></div>
+</section>
+
+<!-- ================= LANE SIMULATOR ================= -->
+<section class="panel" id="panel-sim">
+  <span class="kicker">Physics sandbox</span>
+  <h2 class="section-title">Lane Simulator</h2>
+  <p class="lede">Watch how oil pattern, laydown board, ball speed, and rev rate change ball motion. The pocket for a right-hander sits at board 17.5 (the 1–3 pocket). Your laydown point sits roughly 6 boards right of your slide foot — the default here is board 11, a classic house-shot line over 2nd arrow.</p>
+  <div class="sim-grid" style="margin-top:18px">
+    <div class="controls">
+      <label for="simPattern">Oil pattern</label>
+      <select id="simPattern">
+        <option value="house">House Shot — 40 ft (blended wall)</option>
+        <option value="shortSport">Short Sport — 35 ft (flat)</option>
+        <option value="longSport">Long Sport — 45 ft (flat)</option>
+        <option value="burned">Burned Lane — 40 ft (broken down)</option>
+      </select>
+      <label for="simBall">Bowling ball</label>
+      <select id="simBall">
+        <option value="plastic">Plastic / Polyester — spare ball</option>
+        <option value="urethane">Urethane — smooth control</option>
+        <option value="reactivePolished" selected>Reactive Resin (polished) — skid/flip</option>
+        <option value="reactiveDull">Reactive Resin (dull) — early roll</option>
+      </select>
+      <label for="simLaydown">Laydown board: <span id="laydownVal" class="mono">11</span></label>
+      <input type="range" id="simLaydown" min="5" max="25" value="11">
+      <label for="simSpeed">Ball speed: <span id="speedVal" class="mono">16</span> mph</label>
+      <input type="range" id="simSpeed" min="12" max="20" value="16">
+      <label for="simRevs">Rev rate: <span id="revsVal" class="mono">300</span> rpm</label>
+      <input type="range" id="simRevs" min="150" max="500" step="10" value="300">
+      <button class="action" id="simThrow" style="margin-top:16px;width:100%">Throw the ball</button>
+      <div class="readout" id="simReadout">Set your line and throw.</div>
+    </div>
+    <canvas id="laneCanvas" width="460" height="720" aria-label="Bowling lane trajectory view"></canvas>
+  </div>
+  <div class="card">
+    <h3>Coach's tip</h3>
+    <p id="simCoach">On a house shot, oil in the middle and dry outside gives you miss room: pull it inside and the oil holds the line, leak it right and the dry boards hook it back. Sport patterns take that forgiveness away — accuracy has to be real.</p>
+  </div>
+</section>
+
+<!-- ================= SPARE LAB ================= -->
+<section class="panel" id="panel-spare">
+  <span class="kicker">3-6-9 spare system</span>
+  <h2 class="section-title">Spare Lab</h2>
+  <p class="lede">Tap pins to knock them down and leave yourself a spare. The lab names the key pin and tells you the 3-6-9 move: keep your strike target at the 2nd arrow, move only your feet. Right-handed setup.</p>
+  <div class="card">
+    <div class="rack" id="pinRack" aria-label="Pin rack"></div>
+    <div class="presets" id="sparePresets"></div>
+    <div class="advice" id="spareAdvice"></div>
+  </div>
+</section>
+
+<!-- ================= SCORE SCHOOL ================= -->
+<section class="panel" id="panel-score">
+  <span class="kicker">Ten-frame scoring engine</span>
+  <h2 class="section-title">Score School</h2>
+  <p class="lede">Enter a game ball by ball with the pinpad. Strikes score 10 plus your next two balls; spares score 10 plus your next one. Watch the cumulative math fill in only when it's actually earned — just like a real scorer's table.</p>
+  <div class="card">
+    <div class="frames" id="frameRow"></div>
+    <div class="pinpad" id="pinPad"></div>
+    <div style="display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap">
+      <button class="action secondary" id="scoreReset">New game</button>
+      <button class="action" id="scoreDemo">Load 167 demo game</button>
+      <div class="score-total" id="scoreTotal"></div>
+    </div>
+    <p class="small" id="scoreHint" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<section class="panel" id="panel-practice">
+  <span class="kicker">Practice on your own</span>
+  <h2 class="section-title">Practice</h2>
+  <p class="lede">Practice with a plan. Pick one thing to work on, run the session below, and finish with a written note about what you felt. Bring your questions to your coach.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>60-minute solo practice session</h3>
+      <table class="ref">
+        <tr><th>Time</th><th>What to do</th></tr>
+        <tr><td class="mono">0–5</td><td>Stretch, then 5 shadow swings with no ball</td></tr>
+        <tr><td class="mono">5–15</td><td>Foul-Line Drill — 10 shots, hold every finish</td></tr>
+        <tr><td class="mono">15–30</td><td>Your one focus for today, using the drill that matches it</td></tr>
+        <tr><td class="mono">30–45</td><td>Spares only — 3-6-9 Circuit or Corner-Pin Ladder</td></tr>
+        <tr><td class="mono">45–55</td><td>Play one game with your full pre-shot routine</td></tr>
+        <tr><td class="mono">55–60</td><td>Write one thing that worked and one thing to try next time</td></tr>
+      </table>
+      <p class="small">One focus per session. If you try to fix three things at once, none of them stick.</p>
+    </div>
+    <div class="card">
+      <h3>Self-check</h3>
+      <p class="small">Ask a friend to film you from behind and from the side, then check each item.</p>
+      <div id="selfCheck"></div>
+      <p class="small" id="selfCheckCount" style="margin-top:8px"></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Build your pre-shot routine</h3>
+    <p>Choose the steps you'll do before every shot. The same routine every time lets you bowl the same way when you're nervous.</p>
+    <div id="routineOptions" style="margin-top:8px"></div>
+    <div class="advice" id="routineCard"></div>
+  </div>
+
+  <div class="card">
+    <h3>Drill library</h3>
+    <div id="drillList"></div>
+  </div>
+</section>
+
+<!-- ================= REFERENCE ================= -->
+<section class="panel" id="panel-ref">
+  <span class="kicker">The back of the score sheet</span>
+  <h2 class="section-title">Reference</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Lane specifications</h3>
+      <table class="ref">
+        <tr><th>Spec</th><th>Value</th></tr>
+        <tr><td>Foul line to headpin</td><td class="mono">60 ft</td></tr>
+        <tr><td>Lane width</td><td class="mono">41.5 in / 39 boards</td></tr>
+        <tr><td>Approach length</td><td class="mono">≥ 15 ft</td></tr>
+        <tr><td>Arrows (7)</td><td class="mono">12–16 ft out, every 5th board</td></tr>
+        <tr><td>Pin spacing</td><td class="mono">12 in center to center</td></tr>
+        <tr><td>Pocket (right-hand)</td><td class="mono">Board 17.5 (1–3)</td></tr>
+        <tr><td>Max ball weight</td><td class="mono">16 lb</td></tr>
+        <tr><td>Ball circumference</td><td class="mono">≈ 27 in (8.5 in dia.)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Rule of 31</h3>
+      <p>Take the oil pattern length in feet and subtract 31. The answer is the board where the ball should <b>exit</b> the pattern at the breakpoint.</p>
+      <p class="mono" style="background:var(--navy);color:var(--white);padding:10px;border-radius:6px">Pattern length − 31 = exit board</p>
+      <p>A 40-ft house shot: 40 − 31 = <b>board 9</b> breakpoint. A 35-ft short sport: exit at <b>board 4</b> — play outside. A 45-ft long pattern: <b>board 14</b> — keep the ball in front of you and play straighter through the middle.</p>
+      <p class="small">It's a starting point, not a law — surface, speed, and rev rate move it. Verify against real sheets in the Kegel Pattern Library.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Oil pattern bank</h3>
+    <table class="ref">
+      <tr><th>Pattern</th><th>Length</th><th>Rule-of-31 exit</th><th>Character</th></tr>
+      <tr><td>Typical house shot</td><td class="mono">38–42 ft</td><td class="mono">~7–11</td><td>High middle oil, dry outside — built-in miss room</td></tr>
+      <tr><td>Kegel Boardwalk</td><td class="mono">34 ft</td><td class="mono">3</td><td>Short recreation pattern; play well outside</td></tr>
+      <tr><td>Kegel Main Street</td><td class="mono">41 ft</td><td class="mono">10</td><td>House-style landmark pattern; friendly wall</td></tr>
+      <tr><td>Kegel Stone Street</td><td class="mono">47 ft</td><td class="mono">16</td><td>Long landmark pattern; straighter angles, patience</td></tr>
+      <tr><td>Sport/challenge flat</td><td class="mono">35–45 ft</td><td class="mono">4–14</td><td>Flat side-to-side ratio ≤ ~3:1; misses get punished</td></tr>
+    </table>
+    <p class="small">Browse the real sheets — forward/reverse oil, ratios, and loads — at <a href="https://patternlibrary.kegel.net/" target="_blank" rel="noopener">patternlibrary.kegel.net</a>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Glossary</h3>
+    <dl class="gloss">
+      <dt>Breakpoint</dt><dd>The furthest-outside board the ball reaches before hooking back to the pocket.</dd>
+      <dt>Brooklyn</dt><dd>A strike hit on the wrong side of the headpin (1–2 pocket for a righty).</dd>
+      <dt>Double / Turkey / Hambone</dt><dd>Two, three, and four strikes in a row.</dd>
+      <dt>Entry angle</dt><dd>The angle the ball enters the pocket; ~4–6° maximizes strike percentage.</dd>
+      <dt>Laydown point</dt><dd>The board where the ball first touches the lane — roughly 6 boards right of your slide foot for a righty.</dd>
+      <dt>Loft</dt><dd>Distance the ball travels in the air past the foul line before touching down.</dd>
+      <dt>Pin deck</dt><dd>The area at the end of the lane where the pins stand.</dd>
+      <dt>Rev rate</dt><dd>Revolutions per minute the bowler imparts; more revs = more hook potential.</dd>
+      <dt>Sleeper</dt><dd>A pin hidden directly behind another (e.g., the 8 behind the 2).</dd>
+      <dt>Sport pattern</dt><dd>A flat, low-ratio oil pattern used in competition; demands true accuracy.</dd>
+      <dt>Transition</dt><dd>How the oil pattern changes as games are bowled — carrydown and burn.</dd>
+      <dt>Washout</dt><dd>A headpin-included split-like leave, e.g., 1-2-4-10.</dd>
+    </dl>
+  </div>
+</section>
+
+</div>
+
+<script>
+/* =====================================================
+   KINGPIN ACADEMY — application script
+   Vanilla JS, no dependencies. Node-safe for testing:
+   DOM work only runs when document exists.
+   ===================================================== */
+
+/* ---------------- Data: 12-week path ---------------- */
+var WEEKS = [
+  {t:"Gear, safety, and the four-step approach", items:["Get fitted for a house ball (~10% of body weight)","Learn the four-step approach: pushaway on step 1","Walk-throughs with no ball, then slow rolls"], goal:"Finish 3 games with a balanced finish on every shot", tool:"Study Hall M1–M2"},
+  {t:"Free armswing and timing", items:["Pendulum swing drill — gravity does the work","Ball at top of backswing as slide foot starts","Foul-line drill: one-step swings"], goal:"10 shots in a row without muscling the swing", tool:"Practice: Foul-Line Drill"},
+  {t:"Targeting the arrows", items:["Aim at arrows (15 ft away), never the pins","Find your strike line over 2nd arrow","Track your laydown board"], goal:"Hit your target arrow 7 of 10 shots", tool:"Lane Simulator"},
+  {t:"Release and roll", items:["Thumb out first, fingers lift through the ball","Handshake finish position","Learn what your ball's roll looks like"], goal:"Consistent forward roll — no floppy wrist", tool:"Study Hall M3"},
+  {t:"Scoring mastery", items:["Score full games by hand — no monitors","Strike and spare bonus math cold","10th-frame edge cases"], goal:"Score a full game by hand with zero errors", tool:"Score School"},
+  {t:"The 3-6-9 spare system", items:["Key pin identification","Feet move, target stays at 2nd arrow","Corner-pin ladder drill"], goal:"Convert 6 of 10 single-pin spares", tool:"Spare Lab"},
+  {t:"Reading lanes and oil", items:["Rule of 31 breakpoint math","House vs sport patterns","Watch ball reaction, not just pinfall"], goal:"Explain your breakpoint for a 40-ft shot", tool:"Simulator + Reference"},
+  {t:"League play under pressure", items:["Bowl 3 games with a pre-shot routine","Track spares and pocket hits, not just score","Breathing reset between frames"], goal:"Pre-shot routine on 100% of shots", tool:"Practice: Self-Check"},
+  {t:"Mental game and pre-shot routine", items:["Build your routine in the Practice tab","One breath and one cue before every shot","Reset after a bad frame: next shot only"], goal:"Use your full routine on every shot for 3 games", tool:"Study Hall M8 + Practice"},
+  {t:"Making adjustments", items:["Follow the miss: high = move left, light = move right","The 2-and-1 move: feet 2 boards, target 1 board, same direction","Expect to move left as the lanes change"], goal:"Make the right move within 2 frames of a miss", tool:"Lane Simulator"},
+  {t:"Your equipment", items:["Get fitted at a pro shop","Use a plastic ball for spares","Try the ball selector in the simulator to see coverstock differences"], goal:"Know which ball you throw at strikes and which at spares, and why", tool:"Study Hall M7 + Simulator"},
+  {t:"League-ready", items:["Bowl a 3-game set with your routine","Track pocket hits and single-pin spares made","Set 2 goals for next season with your coach"], goal:"A full 3-game set with your stats written down", tool:"Score School + Practice"}
+];
+
+/* ---------------- Data: study modules ---------------- */
+var MODULES = [
+  {title:"M1 · Fundamentals & Setup", points:[
+    "Ball fit: thumb snug but exits freely; span lets fingers reach holes without stretching. House-ball weight ≈ 10% of body weight, capped at 16 lb.",
+    "Stance: ball-side foot back a half step, knees soft, ball held between waist and chest, in line with the bowling shoulder.",
+    "Eyes on a target arrow 15 feet away — never the pins. Arrows are closer, so small aim errors stay small.",
+    "Etiquette and safety: one bowler on the approach at a time; yield to the bowler on your right; never cross the foul line (lane oil is slippery)."],
+   quiz:[
+    {q:"Where should your eyes be during the approach?", opts:["On the pins","On a target arrow","On the ball","On your feet"], a:1},
+    {q:"A good house-ball weight is about…", opts:["5% of body weight","10% of body weight (max 16 lb)","20% of body weight","Always 16 lb"], a:1},
+    {q:"Who has the right of way on the approach?", opts:["Whoever got up first","The bowler on your left","The bowler on your right","The higher average"], a:2}]},
+  {title:"M2 · The Four-Step Approach", points:[
+    "Right-hander starts with the right foot. Step 1: pushaway — ball and foot move together. Step 2: ball swings down. Step 3: top of backswing. Step 4: slide and release.",
+    "Timing rule: the ball reaches the top of the backswing as the slide foot starts forward.",
+    "Finish tall and balanced: slide foot pointed at target, trail leg swept behind, hold the finish for a two-count.",
+    "Common fault: rushing the line — feet beat the ball, forcing a muscled, early release."],
+   quiz:[
+    {q:"In a four-step approach, the pushaway happens on…", opts:["Step 1","Step 2","Step 3","Step 4"], a:0},
+    {q:"When should the ball reach the top of the backswing?", opts:["On step 1","As the slide foot starts","After the release","Before step 2"], a:1},
+    {q:"'Beating the ball to the line' causes…", opts:["More hook","A muscled early release","A higher backswing","Better accuracy"], a:1}]},
+  {title:"M3 · Release & Ball Motion", points:[
+    "Release order: thumb exits first, then fingers lift through the ball — this creates revs.",
+    "Hand finishes in a handshake position for a classic hook release; stay behind the ball, don't spin around the side.",
+    "Ball motion has three phases: skid (in the oil), hook (friction zone), roll (into the pins). You want the ball rolling — not still hooking — at impact.",
+    "More speed = later hook; more revs = more hook. Speed and revs must be matched to the pattern."],
+   quiz:[
+    {q:"What exits the ball first in a good release?", opts:["Fingers","Thumb","Whole hand at once","Wrist"], a:1},
+    {q:"The three phases of ball motion in order are…", opts:["Roll, hook, skid","Hook, skid, roll","Skid, hook, roll","Skid, roll, hook"], a:2},
+    {q:"Increasing ball speed generally makes the ball hook…", opts:["Earlier","Later","The same","Backward"], a:1}]},
+  {title:"M4 · Targeting & the Arrows", points:[
+    "The 7 arrows sit 12–16 ft past the foul line, one every 5th board. 2nd arrow = board 10 — the classic house-shot target.",
+    "Lane geometry: boards are numbered 1–39. For a right-hander, board 1 is at the right gutter; the pocket is board 17.5.",
+    "Your laydown point is ~6 boards right of your slide foot's board (right-hander). Slide on 17, lay it down near 11.",
+    "Adjust with the lane: if you're hitting high (left of pocket), move feet left; light, move feet right — 'follow the miss.'"],
+   quiz:[
+    {q:"The 2nd arrow sits on board…", opts:["5","10","15","17.5"], a:1},
+    {q:"The right-hander's pocket is board…", opts:["12","15","17.5","20"], a:2},
+    {q:"You keep hitting high (left of pocket). Classic move:", opts:["Move feet right","Move feet left","Throw harder","Aim at the pins"], a:1}]},
+  {title:"M5 · Spare Shooting Systems", points:[
+    "3-6-9 system: keep your strike target (2nd arrow); move only your feet. 2-pin: 3 boards right. 4-pin: 6 right. 7-pin: 9 right. 3-pin: 3 left. 6-pin: 6 left. 10-pin: 9 left. (Right-handed.)",
+    "Key pin: the pin you must hit first — usually the closest/front pin of the cluster.",
+    "Cross-lane angles beat straight-up shots for corner pins: more lane = more margin.",
+    "Advanced option: throw plastic/spare balls straight at everything right of the headpin to remove oil-pattern guesswork."],
+   quiz:[
+    {q:"In 3-6-9, converting the 10-pin means moving your feet…", opts:["9 boards right","9 boards left","6 boards left","Not at all"], a:1},
+    {q:"The 'key pin' is…", opts:["The headpin always","The pin worth most points","The pin you must contact first","The back-row pin"], a:2},
+    {q:"For the 4-pin, a right-hander moves feet…", opts:["3 right","6 right","6 left","9 left"], a:1}]},
+  {title:"M6 · Lane Play & Oil Patterns", points:[
+    "Oil is invisible but decides everything. House shots pile oil in the middle with dry outsides — misses get corrected toward the pocket.",
+    "Sport/challenge patterns are flat (side-to-side ratio ~3:1 or less) — no built-in correction.",
+    "Rule of 31: pattern length − 31 = the board your breakpoint should exit on.",
+    "Transition: oil moves and depletes during play. Carrydown pushes oil long; burn opens the heads. Expect to move your feet inside as the night goes on."],
+   quiz:[
+    {q:"Rule of 31 on a 43-ft pattern puts your exit board at…", opts:["7","9","12","14"], a:2},
+    {q:"A 'flat' sport pattern means…", opts:["No oil at all","Even oil side-to-side","Oil only outside","Short oil"], a:1},
+    {q:"As lanes transition during league, most bowlers move…", opts:["Feet inside (left)","Feet outside (right)","To a heavier ball","To the next pair"], a:0}]},
+  {title:"M7 · Equipment Essentials", points:[
+    "Coverstock is ~70% of ball reaction: plastic (least hook) → urethane → reactive resin (most). Beginners: plastic for spares, entry-level reactive for strikes.",
+    "Ball surface matters: duller = earlier hook; polished = longer skid.",
+    "A custom-fitted ball from a pro shop transforms release quality — worth it before any coverstock upgrade.",
+    "Care: wipe oil off every shot; deep-clean regularly. Oil-soaked covers stop hooking."],
+   quiz:[
+    {q:"The biggest factor in ball reaction is…", opts:["Color","Coverstock","Brand","Weight block name"], a:1},
+    {q:"Which coverstock hooks least — ideal for spares?", opts:["Reactive resin","Urethane","Plastic/polyester","Particle"], a:2},
+    {q:"A duller ball surface generally hooks…", opts:["Earlier","Later","Never","Only on sport shots"], a:0}]},
+  {title:"M8 · Mental Game & Pre-Shot Routine", points:[
+    "A pre-shot routine is the same short sequence before every shot: wipe the ball, set your feet on your board, eyes to your target, one breath, go.",
+    "Set process goals, not score goals. 'Hold my finish on every shot' is something you control; 'bowl a 200' is not.",
+    "After a bad frame: one deep breath, one simple cue, then think only about the next shot. A bad frame is one frame.",
+    "Before you step, picture the ball rolling over your target arrow. Seeing the shot first helps your body make it."],
+   quiz:[
+    {q:"A good pre-shot routine is…", opts:["Different every shot","The same short steps every shot","Only used in tournaments","As long as possible"], a:1},
+    {q:"Which is a process goal?", opts:["Bowl a 200 tonight","Beat my friend","Hold my finish on every shot","Win the league"], a:2},
+    {q:"You just left a 7-10 split. The best next step is…", opts:["Think about your average","Throw harder next frame","One breath, one cue, focus on the next shot","Change balls right away"], a:2}]}
+];
+
+/* ---------------- Data: drills (student self-practice) ---------------- */
+var DRILLS = [
+  {n:"Foul-Line Drill", f:"Release & balance", d:"Stand at the foul line with no approach. Swing once and release, then hold your finish for a two-count. Do 10. This works on your release without your feet getting in the way."},
+  {n:"One-Step Drill", f:"Timing", d:"Start one step from the line. Push the ball away and slide together, then roll it. This teaches your swing and your slide to arrive together."},
+  {n:"Shadow Swings", f:"Free armswing", d:"No ball. Walk your full approach and let your arm swing like a pendulum. If your shoulder feels tight, you're muscling it. Film it if you can."},
+  {n:"Towel Under the Arm", f:"Compact swing", d:"Tuck a small towel under your bowling-side armpit through the pushaway. If it drops early, your swing is moving away from your body."},
+  {n:"Corner-Pin Ladder", f:"Spares", d:"Alternate shooting at the 7-pin and the 10-pin. Score 2 points for each one you make. First to 10 points wins. Use the cross-lane angle every time."},
+  {n:"Low-Ball Game", f:"Accuracy", d:"Try to score as low as possible without throwing a gutter ball. You have to hit pins every shot, so you have to aim at single pins. A gutter ball counts as a strike."},
+  {n:"3-6-9 Circuit", f:"Spare system", d:"Shoot at each key pin in order: 2, 4, 7, 3, 6, 10. Say your feet move out loud before every shot until it's automatic."},
+  {n:"Pre-Shot Routine Reps", f:"Consistency", d:"Play a game where you score yourself on your routine, not on pins. Give yourself one point for every shot where you did the full routine."}
+];
+
+/* ---------------- Data: self-check & routine ---------------- */
+var SELF_CHECK = [
+  "My thumb comes out of the ball cleanly",
+  "My ball is in line with my bowling shoulder in my stance",
+  "I push the ball away on my first step",
+  "My arm swings freely, I'm not forcing it",
+  "Thumb out first, then fingers lift at release",
+  "I'm balanced at the line for a two-count",
+  "I know my 3-6-9 moves for spares"
+];
+var ROUTINE_STEPS = [
+  "Wipe the ball with my towel",
+  "Pick up the ball with two hands",
+  "Set my slide foot on my board",
+  "Find my target arrow",
+  "Take one slow breath",
+  "Say my one cue to myself",
+  "Picture the ball rolling over my target",
+  "Start my approach"
+];
+
+/* =====================================================
+   SCORING ENGINE (pure — unit tested in test.js)
+   scoreGame(rolls) -> {frames:[{rolls,cumulative}], total, complete}
+   ===================================================== */
+function scoreGame(rolls){
+  var frames = [], i = 0, total = 0, complete = true, f;
+  for(f = 0; f < 10; f++){
+    if(i >= rolls.length){
+      complete = false;
+      frames.push({rolls:[], cumulative:null});
+      continue;
+    }
+    if(f < 9){
+      if(rolls[i] === 10){
+        if(i + 2 < rolls.length){
+          total += 10 + rolls[i+1] + rolls[i+2];
+          frames.push({rolls:[10], cumulative:total});
+        }else{
+          complete = false;
+          frames.push({rolls:[10], cumulative:null});
+        }
+        i += 1;
+      }else if(i + 1 < rolls.length){
+        var a = rolls[i], b = rolls[i+1];
+        if(a + b === 10){
+          if(i + 2 < rolls.length){
+            total += 10 + rolls[i+2];
+            frames.push({rolls:[a,b], cumulative:total});
+          }else{
+            complete = false;
+            frames.push({rolls:[a,b], cumulative:null});
+          }
+        }else{
+          total += a + b;
+          frames.push({rolls:[a,b], cumulative:total});
+        }
+        i += 2;
+      }else{
+        complete = false;
+        frames.push({rolls:[rolls[i]], cumulative:null});
+        i += 1;
+      }
+    }else{
+      var fr = rolls.slice(i);
+      var needsThree = (fr[0] === 10) || (fr.length >= 2 && fr[0] + fr[1] === 10);
+      var needed = needsThree ? 3 : 2;
+      if(fr.length >= needed){
+        var s = 0, k;
+        for(k = 0; k < needed; k++){ s += fr[k]; }
+        total += s;
+        frames.push({rolls:fr.slice(0, needed), cumulative:total});
+      }else{
+        complete = false;
+        frames.push({rolls:fr, cumulative:null});
+      }
+      i += fr.length;
+    }
+  }
+  return {frames:frames, total:(complete ? total : null), runningTotal:total, complete:complete};
+}
+
+/* Which pin counts are legal for the next roll, given rolls so far */
+function legalNextRolls(rolls){
+  var g = scoreGame(rolls);
+  if(gameIsOver(rolls)) return [];
+  // Find the frame/ball we're on by replaying
+  var i = 0, f;
+  for(f = 0; f < 9; f++){
+    if(i >= rolls.length) return range(0,10);            // first ball of frame
+    if(rolls[i] === 10){ i += 1; continue; }
+    if(i + 1 >= rolls.length) return range(0, 10 - rolls[i]); // second ball
+    i += 2;
+  }
+  // 10th frame
+  var fr = rolls.slice(i);
+  if(fr.length === 0) return range(0,10);
+  if(fr.length === 1){
+    return fr[0] === 10 ? range(0,10) : range(0, 10 - fr[0]);
+  }
+  // third ball
+  if(fr[0] === 10 && fr[1] !== 10) return range(0, 10 - fr[1]);
+  return range(0,10);
+}
+function gameIsOver(rolls){
+  var i = 0, f;
+  for(f = 0; f < 9; f++){
+    if(i >= rolls.length) return false;
+    if(rolls[i] === 10){ i += 1; }
+    else if(i + 1 >= rolls.length){ return false; }
+    else { i += 2; }
+  }
+  var fr = rolls.slice(i);
+  if(fr.length < 2) return false;
+  var needsThree = (fr[0] === 10) || (fr[0] + fr[1] === 10);
+  return fr.length >= (needsThree ? 3 : 2);
+}
+function range(lo, hi){ var out=[], v; for(v=lo; v<=hi; v++){ out.push(v); } return out; }
+
+/* =====================================================
+   LANE PHYSICS (pure — unit tested in simtest.js)
+   Boards counted from the RIGHT gutter (right-hander).
+   Pocket = board 17.5 at 60 ft.
+   ===================================================== */
+var HOOK_K = 0.049;           // tuned hook constant
+var DRY_FRICTION = 1.11;      // friction factor past the oil
+var PATTERNS = {
+  house:      {name:"House Shot",  length:40, oilFriction:0.02, blend:"walled"},
+  shortSport: {name:"Short Sport", length:35, oilFriction:0.03, blend:"flat"},
+  longSport:  {name:"Long Sport",  length:45, oilFriction:0.02, blend:"flat"},
+  burned:     {name:"Burned Lane", length:40, oilFriction:0.06, blend:"walled"}
+};
+/* Coverstock response multipliers: how strongly the ball reads
+   friction inside the oil and in the dry backend. */
+var BALLS = {
+  plastic:          {name:"Plastic/Polyester",       oilResponse:0.6, dryResponse:0.25,
+    note:"Plastic barely reads friction — dead straight and predictable. That's why it owns spare duty and loses at strikes."},
+  urethane:         {name:"Urethane",                oilResponse:2.0, dryResponse:0.65,
+    note:"Urethane reads the lane earlier with a smooth, even arc — great control, but it needs a more direct line than reactive."},
+  reactivePolished: {name:"Reactive (polished)",     oilResponse:1.0, dryResponse:1.0,
+    note:"Polished reactive stores energy through the oil, then flips hard when it finds dry boards — the classic skid/flip look."},
+  reactiveDull:     {name:"Reactive (dull/sanded)",  oilResponse:2.5, dryResponse:1.15,
+    note:"Sanded coverstock digs in early and rolls heavy. Same line plays higher — move your feet in or save it for heavy oil."}
+};
+
+/**
+ * computePath(patternKey, laydownBoard, speedMph, revs, ballKey)
+ * Returns {points:[{y(ft), x(board)}], entryBoard, breakBoard, breakY, entryAngleDeg}
+ */
+function computePath(patternKey, laydown, speedMph, revs, ballKey){
+  var p = PATTERNS[patternKey];
+  var ball = BALLS[ballKey || 'reactivePolished'];
+  var R = revs / 300;
+  var S = Math.pow(16 / speedMph, 2);
+  var vx = -0.10;                 // boards per ft, initial drift toward gutter
+  var x = laydown;
+  var dy = 0.5;
+  var pts = [{y:0, x:x}];
+  var minX = x, minY = 0;
+  for(var y = 0; y < 60; y += dy){
+    var inOil = y < p.length;
+    var fr = inOil ? p.oilFriction * ball.oilResponse : DRY_FRICTION * ball.dryResponse;
+    var accel = HOOK_K * R * fr * S;   // boards/ft^2, leftward (+)
+    vx += accel * dy;
+    x += vx * dy;
+    if(x < 1) { x = 1; vx = Math.max(vx, 0); }
+    if(x > 39){ x = 39; vx = Math.min(vx, 0); }
+    pts.push({y:y + dy, x:x});
+    if(x < minX){ minX = x; minY = y + dy; }
+  }
+  var entryAngle = Math.atan(vx * (41.5/39/12)) * 180 / Math.PI * 12; // approx deg via boards->ft
+  return {
+    points: pts,
+    entryBoard: Math.round(x * 10) / 10,
+    breakBoard: Math.round(minX * 10) / 10,
+    breakY: Math.round(minY * 10) / 10,
+    entryAngleDeg: Math.round(Math.atan2(vx * (41.5/468), 1) * 57.2958 * 10) / 10
+  };
+}
+
+/* =====================================================
+   SPARE LAB LOGIC (pure)
+   3-6-9: feet move, target stays at 2nd arrow. Right-handed.
+   ===================================================== */
+var PIN_ROWS = [[7,8,9,10],[4,5,6],[2,3],[1]];   // back row first (display top)
+var PIN_MOVES = {1:0, 5:0, 8:0, 9:0, 2:3, 4:6, 7:9, 3:-3, 6:-6, 10:-9};
+/* pin board positions (approx, boards from right) for key-pin choice */
+var PIN_BOARDS = {1:20, 2:25, 3:15, 4:30, 5:20, 6:10, 7:35, 8:25, 9:15, 10:5};
+var PIN_ROWDEPTH = {1:0, 2:1, 3:1, 4:2, 5:2, 6:2, 7:3, 8:3, 9:3, 10:3};
+
+function keyPin(standing){
+  if(standing.length === 0) return null;
+  var sorted = standing.slice().sort(function(a,b){
+    if(PIN_ROWDEPTH[a] !== PIN_ROWDEPTH[b]) return PIN_ROWDEPTH[a] - PIN_ROWDEPTH[b];
+    return Math.abs(PIN_BOARDS[a]-20) - Math.abs(PIN_BOARDS[b]-20);
+  });
+  return sorted[0];
+}
+function isSplit(standing){
+  if(standing.indexOf(1) !== -1 || standing.length < 2) return false;
+  var s = standing.slice().sort(function(a,b){return PIN_BOARDS[b]-PIN_BOARDS[a];});
+  for(var i = 0; i < s.length - 1; i++){
+    if(PIN_BOARDS[s[i]] - PIN_BOARDS[s[i+1]] >= 10) return true;
+  }
+  return false;
+}
+function spareAdvice(standing){
+  if(standing.length === 10) return {title:"Full rack", body:"That's a strike ball, not a spare. Strike line: feet on 17, ball down board 11, target 2nd arrow."};
+  if(standing.length === 0) return {title:"Clean sweep!", body:"Nothing standing — mark it a strike and reset the rack."};
+  var kp = keyPin(standing);
+  var mv = PIN_MOVES[kp];
+  var dir = mv > 0 ? "RIGHT" : (mv < 0 ? "LEFT" : "");
+  var moveTxt = mv === 0
+    ? "Key pin " + kp + " is in your strike line — throw your strike ball."
+    : "Key pin is the <b>" + kp + "</b>. Move your feet <b>" + Math.abs(mv) + " boards " + dir + "</b> of your strike stance. Target stays on the <b>2nd arrow</b>.";
+  var extra = "";
+  if(isSplit(standing)) extra = " ⚠ This is a <b>split</b> — pick the makeable side, take your count, and don't chase heroics unless the match demands it.";
+  if(standing.length === 1 && (kp === 7 || kp === 10)) extra = " Corner pin: play the cross-lane angle and flatten your hand (or use a plastic ball) to keep it on line.";
+  var sleepers = standing.filter(function(p){ return (p===8 && standing.indexOf(2)!==-1) || (p===9 && standing.indexOf(3)!==-1); });
+  if(sleepers.length) extra += " There's a <b>sleeper</b> back there — hit the front pin dead center to drive through.";
+  return {title:"Leave: " + standing.join("-"), body: moveTxt + extra};
+}
+
+/* =====================================================
+   UI LAYER — only runs in a browser
+   ===================================================== */
+function initUI(){
+  var $ = function(sel){ return document.querySelector(sel); };
+  var $$ = function(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+
+  /* ------- Tabs ------- */
+  $$('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      $$('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      $$('.panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      if(btn.dataset.tab === 'sim') drawLane(lastShot);
+    });
+  });
+
+  /* ------- The Path ------- */
+  var weekList = $('#weekList');
+  var done = 0;
+  WEEKS.forEach(function(w, idx){
+    var el = document.createElement('div');
+    el.className = 'week';
+    el.innerHTML =
+      '<div class="week-num">WEEK<b>' + (idx+1) + '</b></div>' +
+      '<div><h3>' + w.t + '</h3><ul>' +
+      w.items.map(function(it){ return '<li>' + it + '</li>'; }).join('') +
+      '</ul><div class="goal">🎯 Goal: ' + w.goal + ' · <span class="badge navy">' + w.tool + '</span></div>' +
+      '<label><input type="checkbox" data-week="' + idx + '"> Mark week ' + (idx+1) + ' complete</label></div>';
+    weekList.appendChild(el);
+  });
+  weekList.addEventListener('change', function(){
+    var checked = weekList.querySelectorAll('input:checked').length;
+    $('#pathFill').style.width = (checked / 12 * 100) + '%';
+    $('#pathCount').textContent = checked + ' of 12 weeks complete' + (checked === 12 ? ' — you\'re league-ready. Go bowl.' : '');
+  });
+
+  /* ------- Study Hall ------- */
+  var moduleList = $('#moduleList');
+  MODULES.forEach(function(m, mi){
+    var el = document.createElement('div');
+    el.className = 'module';
+    var quizHtml = m.quiz.map(function(q, qi){
+      return '<div class="q" data-m="' + mi + '" data-q="' + qi + '"><div class="stem">' + (qi+1) + '. ' + q.q + '</div>' +
+        q.opts.map(function(o, oi){
+          return '<label><input type="radio" name="m' + mi + 'q' + qi + '" value="' + oi + '"> ' + o + '</label>';
+        }).join('') + '</div>';
+    }).join('');
+    el.innerHTML =
+      '<button class="module-head" aria-expanded="false"><span>' + m.title + '</span><span class="badge gold" id="mbadge' + mi + '">Not started</span></button>' +
+      '<div class="module-body"><ul>' +
+      m.points.map(function(p){ return '<li>' + p + '</li>'; }).join('') +
+      '</ul><div class="quiz"><h3>Quiz</h3>' + quizHtml +
+      '<button class="action" data-grade="' + mi + '">Grade quiz</button> ' +
+      '<button class="action secondary" data-retry="' + mi + '" style="display:none">Retry missed</button>' +
+      '<div class="quiz-result" id="qres' + mi + '"></div></div></div>';
+    moduleList.appendChild(el);
+  });
+  moduleList.addEventListener('click', function(e){
+    var head = e.target.closest('.module-head');
+    if(head){
+      var mod = head.parentElement;
+      mod.classList.toggle('open');
+      head.setAttribute('aria-expanded', mod.classList.contains('open'));
+      return;
+    }
+    var g = e.target.closest('[data-grade]');
+    var r = e.target.closest('[data-retry]');
+    if(g) gradeQuiz(parseInt(g.dataset.grade, 10));
+    if(r) retryQuiz(parseInt(r.dataset.retry, 10));
+  });
+  function gradeQuiz(mi){
+    var m = MODULES[mi], correct = 0;
+    m.quiz.forEach(function(q, qi){
+      var qEl = moduleList.querySelector('.q[data-m="' + mi + '"][data-q="' + qi + '"]');
+      var labels = qEl.querySelectorAll('label');
+      var picked = qEl.querySelector('input:checked');
+      labels.forEach(function(l){ l.classList.remove('correct','wrong'); });
+      if(picked){
+        var v = parseInt(picked.value, 10);
+        if(v === q.a){ correct++; labels[v].classList.add('correct'); }
+        else{ labels[v].classList.add('wrong'); labels[q.a].classList.add('correct'); }
+      }else{
+        labels[q.a].classList.add('correct');
+      }
+    });
+    var res = document.getElementById('qres' + mi);
+    var badge = document.getElementById('mbadge' + mi);
+    var retryBtn = moduleList.querySelector('[data-retry="' + mi + '"]');
+    if(correct === m.quiz.length){
+      res.textContent = '✔ ' + correct + '/' + m.quiz.length + ' — module mastered.';
+      res.style.color = 'var(--ok)';
+      badge.textContent = 'Mastered'; badge.className = 'badge ok';
+      retryBtn.style.display = 'none';
+    }else{
+      res.textContent = correct + '/' + m.quiz.length + ' — review the green answers, then retry.';
+      res.style.color = 'var(--red)';
+      badge.textContent = correct + '/' + m.quiz.length; badge.className = 'badge red';
+      retryBtn.style.display = 'inline-block';
+    }
+  }
+  function retryQuiz(mi){
+    MODULES[mi].quiz.forEach(function(q, qi){
+      var qEl = moduleList.querySelector('.q[data-m="' + mi + '"][data-q="' + qi + '"]');
+      qEl.querySelectorAll('label').forEach(function(l){ l.classList.remove('correct','wrong'); });
+      qEl.querySelectorAll('input').forEach(function(inp){ inp.checked = false; });
+    });
+    document.getElementById('qres' + mi).textContent = '';
+  }
+
+  /* ------- Lane Simulator ------- */
+  var canvas = document.getElementById('laneCanvas');
+  var ctx = canvas.getContext('2d');
+  var lastShot = null;
+  function boardToX(b){ return canvas.width - (b / 39) * (canvas.width - 40) - 20; }
+  function feetToY(ft){ return canvas.height - 30 - (ft / 60) * (canvas.height - 90); }
+  function drawLane(shot){
+    var p = PATTERNS[document.getElementById('simPattern').value];
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // boards
+    for(var b = 1; b <= 39; b++){
+      ctx.fillStyle = b % 2 ? '#EDD9A3' : '#E4CD91';
+      var x0 = boardToX(b + 0.5), x1 = boardToX(b - 0.5);
+      ctx.fillRect(x0, feetToY(60), x1 - x0, feetToY(0) - feetToY(60));
+    }
+    // oil overlay
+    ctx.fillStyle = 'rgba(62,110,158,0.32)';
+    if(p.blend === 'walled'){
+      ctx.fillRect(boardToX(30), feetToY(p.length), boardToX(10) - boardToX(30), feetToY(0) - feetToY(p.length));
+      ctx.fillStyle = 'rgba(62,110,158,0.16)';
+      ctx.fillRect(boardToX(39), feetToY(p.length), boardToX(1) - boardToX(39), feetToY(0) - feetToY(p.length));
+    }else{
+      ctx.fillRect(boardToX(39), feetToY(p.length), boardToX(1) - boardToX(39), feetToY(0) - feetToY(p.length));
+    }
+    // arrows
+    ctx.fillStyle = '#9C2F25';
+    for(var a = 1; a <= 7; a++){
+      var ab = a * 5, ax = boardToX(ab), ay = feetToY(15);
+      ctx.beginPath(); ctx.moveTo(ax, ay - 9); ctx.lineTo(ax - 5, ay + 4); ctx.lineTo(ax + 5, ay + 4); ctx.closePath(); ctx.fill();
+    }
+    // oil line marker
+    ctx.strokeStyle = '#3E6E9E'; ctx.setLineDash([6,4]); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(boardToX(39), feetToY(p.length)); ctx.lineTo(boardToX(1), feetToY(p.length)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#1F3A5C'; ctx.font = '600 11px "IBM Plex Mono", monospace';
+    ctx.fillText(p.length + ' ft oil', boardToX(38), feetToY(p.length) - 6);
+    // pins
+    var pinCoords = [
+      {b:20, f:60},{b:25, f:60.7},{b:15, f:60.7},{b:30, f:61.4},{b:20, f:61.4},{b:10, f:61.4},{b:35, f:62.1},{b:25, f:62.1},{b:15, f:62.1},{b:5, f:62.1}
+    ];
+    pinCoords.forEach(function(pc){
+      var px = boardToX(pc.b), py = feetToY(60) - (pc.f - 60) * 10;
+      ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFFDF6'; ctx.fill();
+      ctx.strokeStyle = '#1F3A5C'; ctx.lineWidth = 1.5; ctx.stroke();
+    });
+    // foul line
+    ctx.strokeStyle = '#1F3A5C'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(boardToX(39), feetToY(0)); ctx.lineTo(boardToX(1), feetToY(0)); ctx.stroke();
+    ctx.fillStyle = '#1F3A5C'; ctx.font = '600 11px "IBM Plex Mono", monospace';
+    ctx.fillText('foul line', boardToX(38), feetToY(0) + 16);
+    // trajectory
+    if(shot){
+      ctx.strokeStyle = '#BE3A2E'; ctx.lineWidth = 3.5; ctx.lineJoin = 'round';
+      ctx.beginPath();
+      shot.points.forEach(function(pt, i){
+        var x = boardToX(pt.x), y = feetToY(pt.y);
+        if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      // breakpoint marker
+      ctx.fillStyle = '#B98A1F';
+      ctx.beginPath(); ctx.arc(boardToX(shot.breakBoard), feetToY(shot.breakY), 6, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#FFFDF6'; ctx.lineWidth = 2; ctx.stroke();
+    }
+  }
+  function fireShot(){
+    var key = document.getElementById('simPattern').value;
+    var ballKey = document.getElementById('simBall').value;
+    var laydown = parseInt(document.getElementById('simLaydown').value, 10);
+    var speed = parseInt(document.getElementById('simSpeed').value, 10);
+    var revs = parseInt(document.getElementById('simRevs').value, 10);
+    lastShot = computePath(key, laydown, speed, revs, ballKey);
+    drawLane(lastShot);
+    var e = lastShot.entryBoard;
+    var pocketMsg = (e >= 16.5 && e <= 18.5) ? '<b>POCKET!</b> Flush at ' : (e > 18.5 ? (e > 21 ? 'Crossed over — Brooklyn side at ' : 'High hit at ') : (e < 14 ? 'Missed light/right at ' : 'Light hit at '));
+    document.getElementById('simReadout').innerHTML =
+      'Ball: <b>' + BALLS[ballKey].name + '</b><br>' +
+      'Breakpoint: <b>board ' + lastShot.breakBoard + '</b> @ <b>' + lastShot.breakY + ' ft</b><br>' +
+      'Entry: <b>board ' + e + '</b> · angle <b>' + lastShot.entryAngleDeg + '°</b><br>' +
+      pocketMsg + 'board ' + e + '. Rule of 31 exit for this pattern: board ' + (PATTERNS[key].length - 31) + '.';
+    var coach = {
+      house:"House shot: the oil wall forgives inside misses and the dry outside kicks leaks back. Groove a repeatable line over 2nd arrow.",
+      shortSport:"Short sport: friction comes early, so exit around board 4 and control the breakpoint with speed. Soft hands, quiet feet.",
+      longSport:"Long sport: the ball won't see friction until 45 ft. Play straighter, stay in front of the pattern, and treat the pocket like a keyhole.",
+      burned:"Burned lane: the heads are gone, so the ball wants to hook off your hand. Move deep, add speed, or ball down to tame it."
+    };
+    document.getElementById('simCoach').textContent = coach[key] + ' ' + BALLS[ballKey].note;
+  }
+  ['simPattern','simBall','simLaydown','simSpeed','simRevs'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      document.getElementById('laydownVal').textContent = document.getElementById('simLaydown').value;
+      document.getElementById('speedVal').textContent = document.getElementById('simSpeed').value;
+      document.getElementById('revsVal').textContent = document.getElementById('simRevs').value;
+      if(id === 'simPattern') drawLane(lastShot = null);
+    });
+  });
+  document.getElementById('simThrow').addEventListener('click', fireShot);
+  drawLane(null);
+
+  /* ------- Spare Lab ------- */
+  var standing = [1,2,3,4,5,6,7,8,9,10];
+  var rack = document.getElementById('pinRack');
+  PIN_ROWS.forEach(function(row){
+    var rowEl = document.createElement('div');
+    rowEl.className = 'rack-row';
+    row.forEach(function(pin){
+      var b = document.createElement('button');
+      b.className = 'pin'; b.textContent = pin; b.dataset.pin = pin;
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-label', 'Pin ' + pin);
+      rowEl.appendChild(b);
+    });
+    rack.appendChild(rowEl);
+  });
+  rack.addEventListener('click', function(e){
+    var b = e.target.closest('.pin');
+    if(!b) return;
+    var pin = parseInt(b.dataset.pin, 10);
+    var idx = standing.indexOf(pin);
+    if(idx === -1){ standing.push(pin); b.classList.remove('down'); b.setAttribute('aria-pressed','false'); }
+    else{ standing.splice(idx, 1); b.classList.add('down'); b.setAttribute('aria-pressed','true'); }
+    renderAdvice();
+  });
+  var presets = [
+    {n:"10-pin", keep:[10]},{n:"7-pin", keep:[7]},{n:"2-4-5 bucket", keep:[2,4,5]},
+    {n:"3-6-10 wash", keep:[3,6,10]},{n:"2-8 sleeper", keep:[2,8]},{n:"7-10 split", keep:[7,10]},
+    {n:"Full rack", keep:[1,2,3,4,5,6,7,8,9,10]}
+  ];
+  var presetWrap = document.getElementById('sparePresets');
+  presets.forEach(function(ps){
+    var b = document.createElement('button');
+    b.className = 'action secondary'; b.textContent = ps.n; b.style.fontSize = '12px'; b.style.padding = '7px 12px';
+    b.addEventListener('click', function(){
+      standing = ps.keep.slice();
+      document.querySelectorAll('.pin').forEach(function(pinEl){
+        var down = standing.indexOf(parseInt(pinEl.dataset.pin, 10)) === -1;
+        pinEl.classList.toggle('down', down);
+        pinEl.setAttribute('aria-pressed', down ? 'true' : 'false');
+      });
+      renderAdvice();
+    });
+    presetWrap.appendChild(b);
+  });
+  function renderAdvice(){
+    standing.sort(function(a,b){ return a - b; });
+    var adv = spareAdvice(standing);
+    document.getElementById('spareAdvice').innerHTML = '<b>' + adv.title + '</b><br>' + adv.body;
+  }
+  renderAdvice();
+
+  /* ------- Score School ------- */
+  var rolls = [];
+  var frameRow = document.getElementById('frameRow');
+  var pinPad = document.getElementById('pinPad');
+  function symbol(fr, bi, isTenth){
+    var v = fr.rolls[bi];
+    if(v === undefined) return '';
+    if(v === 10) return 'X';
+    if(v === 0) return '–';
+    if(bi > 0 && fr.rolls[bi-1] !== 10 && fr.rolls[bi-1] + v === 10) return '/';
+    return String(v);
+  }
+  function renderScore(){
+    var g = scoreGame(rolls);
+    frameRow.innerHTML = '';
+    var over = gameIsOver(rolls);
+    var currentFrame = -1;
+    for(var f = 0; f < 10; f++){
+      if(currentFrame === -1 && !over){
+        var fr = g.frames[f];
+        var isDone = (f < 9)
+          ? (fr.rolls[0] === 10 || fr.rolls.length === 2)
+          : false;
+        if(!isDone && (f === 9 ? true : true)){
+          // find first frame not fully thrown
+          if(f < 9 && (fr.rolls.length === 0 || (fr.rolls[0] !== 10 && fr.rolls.length < 2))) currentFrame = f;
+          if(f === 9 && !over && g.frames.slice(0,9).every(function(x){ return x.rolls[0] === 10 || x.rolls.length === 2; })) currentFrame = 9;
+        }
+      }
+    }
+    g.frames.forEach(function(fr, f){
+      var el = document.createElement('div');
+      el.className = 'frame' + (f === currentFrame ? ' current' : '');
+      var nb = f === 9 ? 3 : 2;
+      var balls = '';
+      for(var b = 0; b < nb; b++){
+        balls += '<div class="ball">' + symbol(fr, b, f === 9) + '</div>';
+      }
+      el.innerHTML = '<div class="fnum">' + (f + 1) + '</div><div class="balls">' + balls + '</div>' +
+        '<div class="cum">' + (fr.cumulative === null ? '' : fr.cumulative) + '</div>';
+      frameRow.appendChild(el);
+    });
+    var legal = legalNextRolls(rolls);
+    pinPad.innerHTML = '';
+    for(var v = 0; v <= 10; v++){
+      var btn = document.createElement('button');
+      btn.textContent = v === 10 ? 'X' : (v === 0 ? '–' : v);
+      btn.disabled = legal.indexOf(v) === -1;
+      btn.dataset.v = v;
+      pinPad.appendChild(btn);
+    }
+    document.getElementById('scoreTotal').textContent = over ? 'Final: ' + g.total : (rolls.length ? 'Running: ' + g.runningTotal : '');
+    document.getElementById('scoreHint').textContent = over
+      ? 'Game over. Strikes need two bonus balls, spares one — that\'s why the 10th frame gets extras.'
+      : (legal.length === 0 ? '' : 'Enter pinfall for the highlighted frame. X = strike, – = gutter.');
+  }
+  pinPad.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if(!b || b.disabled) return;
+    rolls.push(parseInt(b.dataset.v, 10));
+    renderScore();
+  });
+  document.getElementById('scoreReset').addEventListener('click', function(){ rolls = []; renderScore(); });
+  document.getElementById('scoreDemo').addEventListener('click', function(){
+    rolls = [10,7,3,9,0,10,0,8,8,2,0,6,10,10,10,8,1];
+    renderScore();
+  });
+  renderScore();
+
+  /* ------- Practice: drills ------- */
+  var drillList = document.getElementById('drillList');
+  DRILLS.forEach(function(d){
+    var el = document.createElement('div');
+    el.className = 'drill';
+    el.innerHTML = '<div class="meta">' + d.f + '</div><h3>' + d.n + '</h3><p>' + d.d + '</p>';
+    drillList.appendChild(el);
+  });
+
+  /* ------- Practice: self-check ------- */
+  var selfCheck = document.getElementById('selfCheck');
+  SELF_CHECK.forEach(function(item, i){
+    var l = document.createElement('label');
+    l.style.cssText = 'display:flex;gap:8px;align-items:flex-start;margin:7px 0;cursor:pointer;font-size:14px';
+    l.innerHTML = '<input type="checkbox" data-check="' + i + '"> <span>' + item + '</span>';
+    selfCheck.appendChild(l);
+  });
+  function updateSelfCheck(){
+    var c = selfCheck.querySelectorAll('input:checked').length;
+    document.getElementById('selfCheckCount').textContent = c + ' of ' + SELF_CHECK.length + ' checked' +
+      (c === SELF_CHECK.length ? ' — solid fundamentals.' : '. Pick one unchecked item as your next practice focus.');
+  }
+  selfCheck.addEventListener('change', updateSelfCheck);
+  updateSelfCheck();
+
+  /* ------- Practice: routine builder ------- */
+  var routineOptions = document.getElementById('routineOptions');
+  ROUTINE_STEPS.forEach(function(step, i){
+    var l = document.createElement('label');
+    l.style.cssText = 'display:flex;gap:8px;align-items:center;margin:6px 0;cursor:pointer;font-size:14px';
+    l.innerHTML = '<input type="checkbox" data-step="' + i + '"' + ([0,2,3,4,7].indexOf(i) !== -1 ? ' checked' : '') + '> ' + step;
+    routineOptions.appendChild(l);
+  });
+  function updateRoutine(){
+    var picked = Array.prototype.slice.call(routineOptions.querySelectorAll('input:checked'))
+      .map(function(inp){ return ROUTINE_STEPS[parseInt(inp.dataset.step, 10)]; });
+    var card = document.getElementById('routineCard');
+    if(picked.length === 0){ card.innerHTML = 'Choose at least one step to build your routine.'; return; }
+    card.innerHTML = '<b>My pre-shot routine</b><ol style="margin:8px 0 0 20px">' +
+      picked.map(function(p){ return '<li>' + p + '</li>'; }).join('') + '</ol>' +
+      (picked.length > 6 ? '<p style="margin-top:8px">Tip: shorter routines are easier to repeat. Try keeping it to 4–6 steps.</p>' : '');
+  }
+  routineOptions.addEventListener('change', updateRoutine);
+  updateRoutine();
+}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initUI);
+  else initUI();
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { scoreGame: scoreGame, legalNextRolls: legalNextRolls, gameIsOver: gameIsOver, computePath: computePath, PATTERNS: PATTERNS, BALLS: BALLS, keyPin: keyPin, isSplit: isSplit, spareAdvice: spareAdvice };
+}
+</script>
+</body>
+</html>
